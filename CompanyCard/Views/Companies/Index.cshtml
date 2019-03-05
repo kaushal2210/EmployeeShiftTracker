@@ -1,0 +1,65 @@
+﻿@model IEnumerable<CompanyCard.Models.Company>
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Company List</h2>
+
+<p>
+    @Html.ActionLink("Add New Company", "Create", "", new { @class = "btn btn-primary btn-sm" })
+</p>
+<table class="table table-hover table-dark">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Website)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Website)
+            </td>
+            <td>
+                @Html.ActionLink("Select", "../Employees/Index", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })
+                @if (Session["Admin"] != null)
+                {
+                    if (Session["Admin"].Equals("Yes"))
+                    {
+                        <span>
+                            | @Html.ActionLink("Edit", "Edit", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })
+                        </span>
+                        <span>
+                            | @Html.ActionLink("Delete", "Delete", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })
+                        </span>
+                    }
+                }
+
+
+            </td>
+
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,74 @@
+﻿@model CompanyCard.Models.Employee
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <table class="businessCard">
+        <tr>
+            <td rowspan="3">
+                <img src="~/Image/dp.png" alt="logo" height="200" width="150">
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td><h1>@Html.DisplayFor(model => model.EmployeeName)</h1></td>
+                    </tr>
+                    <div class="sub">
+                        <tr><td></td></tr>
+                        <tr>
+                            <td>@Html.DisplayFor(model => model.EmployeeAddress)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayFor(model => model.Email)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayFor(model => model.EmployeePhoneNo)</td>
+                        </tr>
+                    </div>
+                </table>
+            </td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td>
+                <table class="company">
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.Company.CompanyName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.Company.CompanyAddress)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.Company.ContactNo)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.Company.Website)
+                        </td>
+                    </tr>
+                </table>
+            </td>
+    </table>
+</div>
+<hr />
+<div>
+    @if (Session["Admin"] != null)
+    {
+        if (Session["Admin"].Equals("Yes"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }, new { @class = "btn btn-primary" })
+        }
+    }|@Html.ActionLink("Back to List", "Index", new { id = Model.Company.CompanyId }, new { @class = "btn btn-primary" })
+</div>

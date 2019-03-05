@@ -1,0 +1,39 @@
+﻿.businessCard {
+    background-image: url('https://ak8.picdn.net/shutterstock/videos/3943028/thumb/1.jpg');
+    font-size: 20px;
+    color: blanchedalmond;
+    border-radius: 10px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0px;
+    line-height: 20px;
+    margin-right: 10px;
+}
+
+.company {
+    font-size: 12px;
+    line-height: 15px;
+}
+
+h1 {
+    margin: 0px;
+    vertical-align: top;
+    padding: 0px;
+}
+
+table {
+    margin: 0px;
+}
+
+
+tr, td {
+    margin: 0px;
+    padding: 0px;
+}
+
+.sub {
+    margin: 0px;
+    vertical-align: top;
+    padding: 0px;
+    font-size: 20px;
+}

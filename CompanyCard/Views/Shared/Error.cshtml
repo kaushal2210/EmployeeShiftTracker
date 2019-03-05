@@ -1,0 +1,18 @@
+﻿@model CompanyCard.Models.ErrorViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Error</title>
+</head>
+<body>
+    <div class="container">
+        <div class="alert alert-danger">
+            <h2>Oops!</h2>
+            <strong>Error!</strong>  @Model.Description
+        </div>
+        @Html.ActionLink("Back to CompanyList", "../Companies/Index", "", new { @class = "btn btn-primary btn-lg" })
+    </div>
+</body>
+</html>

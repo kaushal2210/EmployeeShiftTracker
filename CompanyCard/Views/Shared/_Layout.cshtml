@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/CSS/StyleSheet.css" rel="stylesheet" />
+    <link href="~/CSS/loginStyleSheet.css" rel="stylesheet" />
+    <script src="~/Scripts/StopWatch.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Employee Information App", "Index", "Companies", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            @if (Session["username"] != null)
+            {
+                <div class="navbar-collapse collapse">
+                    @if (Session["Admin"].Equals("Yes"))
+                    {
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("LogIn Informations", "Index", "Logins")</li>
+                        </ul>
+                    }
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a id ="Start" onclick="startFunction()" >Start the Shift</a></li>
+                            <li><a id ="End" onclick="endFunction()" style="display:none">End of Shift</a></li>
+                            <li>@Html.ActionLink(Session["username"].ToString(), "Edit", "Logins", new { id = Session["loginid"] })</li>
+                            <li>@Html.ActionLink("Log Out", "logout", "Logins")</li>
+                        </ul>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="navbar box navbar-right" id="timeContainer" style="display:none">
+        <h1 id="timeLabel"></h1>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
