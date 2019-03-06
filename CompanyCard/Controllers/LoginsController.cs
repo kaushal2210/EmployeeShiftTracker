@@ -26,8 +26,7 @@ namespace CompanyCard.Controllers
                 if (Session["Admin"].Equals("Yes"))
                 {
                     return View(db.Logins);
-                }
-                else
+                }                else
                 {
                     return View("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                 }
@@ -149,14 +148,14 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                
-                if (Session["Admin"].Equals("Yes"))
+                if (id == null)
                 {
-                    if (id == null)
-                    {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                    }
-                    Logins logins = db.Logins.Find(id);
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Logins logins = db.Logins.Find(id);
+                if (Session["Admin"].Equals("Yes") || logins.UserName.Equals(Session["username"]))
+                {
+                    
                     if (logins == null)
                     {
                         return HttpNotFound();
@@ -183,7 +182,7 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes"))
+                if (Session["Admin"].Equals("Yes") || logins.UserName.Equals(Session["username"]))
                 {
                     if (ModelState.IsValid)
                     {

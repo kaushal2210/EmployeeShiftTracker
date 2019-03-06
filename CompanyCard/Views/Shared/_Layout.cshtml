@@ -33,7 +33,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li><a id ="Start" onclick="startFunction()" >Start the Shift</a></li>
                             <li><a id ="End" onclick="endFunction()" style="display:none">End of Shift</a></li>
-                            <li>@Html.ActionLink(Session["username"].ToString(), "Edit", "Logins", new { id = Session["loginid"] })</li>
+                            <li>@Html.ActionLink(Session["username"].ToString(), "Edit", "Logins",new { id = Session["loginid"]},null)</li>
                             <li>@Html.ActionLink("Log Out", "logout", "Logins")</li>
                         </ul>
                 </div>
