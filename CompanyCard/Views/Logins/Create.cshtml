@@ -47,6 +47,6 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-primary" })
-</div>
+    <div>
+        @Ajax.ActionLink("Back to List", "Index", "Logins", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    </div>

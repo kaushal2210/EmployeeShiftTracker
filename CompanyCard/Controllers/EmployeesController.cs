@@ -32,7 +32,7 @@ namespace CompanyCard.Controllers
                 var empTemp = from a in db.Employees.ToList()
                               where a.CompanyCompanyId == company.CompanyId
                               select a;
-                return View(empTemp);
+                return PartialView(empTemp);
             }
             else
             {
@@ -54,7 +54,7 @@ namespace CompanyCard.Controllers
                 {
                     return View("Error", new ErrorViewModel { Description = "Employee not found." });
                 }
-                return View(employee);
+                return PartialView("Details", employee);
             }
             else
             {
@@ -68,7 +68,7 @@ namespace CompanyCard.Controllers
             if (Session["username"] != null)
             {
                 ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName");
-                return View();
+                return PartialView();
             }
             else
             {
@@ -93,7 +93,7 @@ namespace CompanyCard.Controllers
                 }
 
                 ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
-                return View(employee);
+                return PartialView("Create", employee);
             }
             else
             {
@@ -116,7 +116,7 @@ namespace CompanyCard.Controllers
                     return View("Error", new ErrorViewModel { Description = "Employee not found." });
                 }
                 ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
-                return View(employee);
+                return PartialView("Edit", employee);
             }
             else
             {
@@ -140,7 +140,7 @@ namespace CompanyCard.Controllers
                     return RedirectToAction("Index");
                 }
                 ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
-                return View(employee);
+                return PartialView("Edit", employee);
             }
             else
             {
@@ -162,7 +162,7 @@ namespace CompanyCard.Controllers
                 {
                     return View("Error", new ErrorViewModel { Description = "Employee not found." });
                 }
-                return View(employee);
+                return PartialView("Delete", employee);
             }
             else
             {

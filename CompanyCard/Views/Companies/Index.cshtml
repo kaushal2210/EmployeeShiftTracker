@@ -7,7 +7,7 @@
 <h2>Company List</h2>
 
 <p>
-    @Html.ActionLink("Add New Company", "Create", "", new { @class = "btn btn-primary btn-sm" })
+    @Ajax.ActionLink("Add new company", "Create", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </p>
 <table class="table table-hover table-dark">
     <tr>
@@ -42,16 +42,18 @@
                 @Html.DisplayFor(modelItem => item.Website)
             </td>
             <td>
-                @Html.ActionLink("Select", "../Employees/Index", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })
+                @Ajax.ActionLink("Select", "Index", "Employees",new { id = item.CompanyId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
                 @if (Session["Admin"] != null)
                 {
                     if (Session["Admin"].Equals("Yes"))
                     {
                         <span>
-                            | @Html.ActionLink("Edit", "Edit", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })
+                            | @Ajax.ActionLink("Edit", "Edit", new { id = item.CompanyId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+                            @* @Html.ActionLink("Edit", "Edit", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })*@
                         </span>
                         <span>
-                            | @Html.ActionLink("Delete", "Delete", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })
+                            | @Ajax.ActionLink("Delete", "Delete", new { id = item.CompanyId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+                            @*@Html.ActionLink("Delete", "Delete", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })*@
                         </span>
                     }
                 }
@@ -63,3 +65,6 @@
     }
 
 </table>
+@section scripts{
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+}

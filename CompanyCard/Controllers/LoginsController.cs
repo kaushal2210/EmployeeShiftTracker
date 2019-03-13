@@ -25,8 +25,13 @@ namespace CompanyCard.Controllers
             {
                 if (Session["Admin"].Equals("Yes"))
                 {
+                    if (Request.IsAjaxRequest())
+                    {
+                        return PartialView(db.Logins);
+                    }
                     return View(db.Logins);
-                }                else
+                }
+                else
                 {
                     return View("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                 }
@@ -58,6 +63,7 @@ namespace CompanyCard.Controllers
                 Session["loginid"] = user.LoginsId;
                 Session["username"] = user.UserName;
                 Session["Admin"] = user.Admin;
+                Session["EmployeeId"] = user.EmployeeId;
                 return RedirectToAction("Index", "Companies");
             }
 
@@ -79,7 +85,7 @@ namespace CompanyCard.Controllers
                     {
                         return HttpNotFound();
                     }
-                    return View(logins);
+                    return PartialView("Details",db.Logins);
                 }
                 else
                 {
@@ -99,7 +105,7 @@ namespace CompanyCard.Controllers
             {
                 if (Session["Admin"].Equals("Yes"))
                 {
-                    return View();
+                    return PartialView();
                 }
                 else
                 {
@@ -129,7 +135,7 @@ namespace CompanyCard.Controllers
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
-                    return View(logins);
+                    return PartialView("Create",logins);
                 }
                 else
                 {
@@ -155,12 +161,12 @@ namespace CompanyCard.Controllers
                 Logins logins = db.Logins.Find(id);
                 if (Session["Admin"].Equals("Yes") || logins.UserName.Equals(Session["username"]))
                 {
-                    
+
                     if (logins == null)
                     {
                         return HttpNotFound();
                     }
-                    return View(logins);
+                    return PartialView("Edit",logins);
                 }
                 else
                 {
@@ -190,7 +196,7 @@ namespace CompanyCard.Controllers
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
-                    return View(logins);
+                    return PartialView("Edit",logins);
                 }
                 else
                 {
@@ -220,7 +226,7 @@ namespace CompanyCard.Controllers
                     {
                         return HttpNotFound();
                     }
-                    return View(logins);
+                    return PartialView("Delete",logins);
                 }
                 else
                 {

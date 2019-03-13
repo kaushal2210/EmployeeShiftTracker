@@ -1,4 +1,4 @@
-﻿var startTime, currentTime, differenceTime;
+﻿var startTime, differenceTime = 0, workHours = 0, workMin = 0, workSec = 0;
 var timeStart = false;
 
 var endFunction = function () {
@@ -7,13 +7,17 @@ var endFunction = function () {
         document.getElementById("Start").style.display = "block";
         document.getElementById("End").style.display = "none";
         timeStart = false;
+        differenceTime = 0;
+        workHours = 0;
+        workMin = 0;
+        workSec = 0;
         document.getElementById("timeContainer").style.display = "none";
+        document.getElementById("timeLabel").innerHTML = "";
     }
 }    
 
 var startFunction = function () {
     if (!timeStart) {
-        startTime = new Date()
         document.getElementById("Start").style.display = "none";
         document.getElementById("End").style.display = "block";
         document.getElementById("timeContainer").style.display = "block";
@@ -24,13 +28,15 @@ var startFunction = function () {
 
 var getCurrentTime = setInterval(function () {
     if (timeStart) {
-        var currentTime = new Date();
-        var workHours = currentTime.getHours() - startTime.getHours();
-        if (currentTime.getMinutes() <= startTime.getMinutes()) {
-            workmin = startTime.getMinutes() - currentTime.getMinutes();
-        } else {
-            workmin = currentTime.getMinutes() - startTime.getMinutes();
+        workSec = workSec + 1;
+        if (workSec >= 60) {
+            workMin = workMin + 1;
+            workSec = 0; 
         }
-        document.getElementById("timeLabel").innerHTML = "Worked Time = " + workHours + ":" + workmin;
+        if (workMin >= 60) {
+            workHours = workHours + 1;
+            workMin = 0;
+        }
+        document.getElementById("timeLabel").innerHTML = "Worked Time = " + workHours + ":" + workMin + ":" + workSec;
     }
 }, 1000);

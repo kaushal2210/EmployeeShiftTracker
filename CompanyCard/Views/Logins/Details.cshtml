@@ -37,6 +37,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.LoginsId },new { @class = "btn btn-primary" }) |
-    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-primary" })
+    @Html.ActionLink("Edit", "Edit", new { id = Model.LoginsId }, new { @class = "btn btn-primary" }) |
+    @Ajax.ActionLink("Back to List", "Index", "Logins", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </div>

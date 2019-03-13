@@ -28,6 +28,6 @@ namespace CompanyCard.Models
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Logins> Logins { get; set; }
-        public virtual DbSet<LoginInformation> LoginInformations { get; set; }
+        public virtual DbSet<Shift> Shifts { get; set; }
     }
 }

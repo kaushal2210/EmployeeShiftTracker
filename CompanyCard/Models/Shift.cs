@@ -12,11 +12,14 @@ namespace CompanyCard.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class LoginInformation
+    public partial class Shift
     {
-        public int LoginId { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Admin { get; set; }
+        public int ShiftId { get; set; }
+        public System.DateTime StartTime { get; set; }
+        public System.DateTime EndTime { get; set; }
+        public double workedHours { get; set; }
+        public int EmployeeId { get; set; }
+    
+        public virtual Employee Employee { get; set; }
     }
 }

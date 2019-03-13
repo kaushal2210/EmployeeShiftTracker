@@ -68,7 +68,7 @@
     {
         if (Session["Admin"].Equals("Yes"))
         {
-            @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }, new { @class = "btn btn-primary" })
+            @Ajax.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
         }
-    }|@Html.ActionLink("Back to List", "Index", new { id = Model.Company.CompanyId }, new { @class = "btn btn-primary" })
+    }|@Ajax.ActionLink("Back to List", "Index", new { id = Model.Company.CompanyId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </div>

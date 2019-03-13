@@ -19,23 +19,25 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Employee Information App", "Index", "Companies", new { area = "" }, new { @class = "navbar-brand" })
+                @Ajax.ActionLink("Employee Information App", "Index", "Companies", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand" })
             </div>
             @if (Session["username"] != null)
             {
                 <div class="navbar-collapse collapse">
-                    @if (Session["Admin"].Equals("Yes"))
-                    {
-                        <ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("LogIn Informations", "Index", "Logins")</li>
-                        </ul>
-                    }
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a id ="Start" onclick="startFunction()" >Start the Shift</a></li>
-                            <li><a id ="End" onclick="endFunction()" style="display:none">End of Shift</a></li>
-                            <li>@Html.ActionLink(Session["username"].ToString(), "Edit", "Logins",new { id = Session["loginid"]},null)</li>
-                            <li>@Html.ActionLink("Log Out", "logout", "Logins")</li>
-                        </ul>
+                    <ul class="nav navbar-nav">
+                        @if (Session["Admin"].Equals("Yes"))
+                        {
+                            <li>@Ajax.ActionLink("Login Information", "Index", "Logins", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" })</li>
+                        }
+                        <li>@Ajax.ActionLink("Timesheet", "Index", "Shifts", new { id = Session["EmployeeId"] }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" })</li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Ajax.ActionLink("Start the Shift", "Start", "Shifts", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand", @id = "Start", @onclick = "startFunction()" })</li>
+                        <li>@Ajax.ActionLink("End the Shift", "End", "Shifts", new { id = Session["EmployeeId"] }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand", @id = "End", @onclick = "endFunction()", @style = "display:none" })</li>
+                        @*<li><a id ="End" onclick="endFunction()" style="display:none">End of Shift</a></li>*@
+                        <li>@Ajax.ActionLink(Session["username"].ToString(), "Edit", "Logins", new { id = Session["EmployeeId"] }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" })</li>
+                        <li>@Html.ActionLink("Log Out", "logout", "Logins")</li>
+                    </ul>
                 </div>
             }
         </div>
@@ -44,7 +46,9 @@
         <h1 id="timeLabel"></h1>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        <div id="mainBody">
+            @RenderBody()
+        </div>
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>

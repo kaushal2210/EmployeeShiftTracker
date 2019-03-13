@@ -14,6 +14,13 @@ namespace CompanyCard.Models
     
     public partial class Employee
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Employee()
+        {
+            this.Logins = new HashSet<Logins>();
+            this.Shifts = new HashSet<Shift>();
+        }
+    
         public int EmployeeId { get; set; }
         public string EmployeeName { get; set; }
         public string EmployeePhoneNo { get; set; }
@@ -22,5 +29,9 @@ namespace CompanyCard.Models
         public int CompanyCompanyId { get; set; }
     
         public virtual Company Company { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Logins> Logins { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Shift> Shifts { get; set; }
     }
 }

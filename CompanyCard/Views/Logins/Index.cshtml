@@ -7,7 +7,7 @@
 <h2>Login Informations</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary btn-sm" })
+    @Ajax.ActionLink("Create new logins", "Create", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </p>
 <table class="table table-hover table-dark">
     <tr>
@@ -35,14 +35,14 @@
             @Html.DisplayFor(modelItem => item.Admin)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LoginsId }, new { @class = "btn btn-primary btn-sm" }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LoginsId }, new { @class = "btn btn-primary btn-sm" }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LoginsId }, new { @class = "btn btn-primary btn-sm" })
+            @Ajax.ActionLink("Edit", "Edit", new { id=item.LoginsId}, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" }) |
+            @Ajax.ActionLink("Details", "Details", new { id = item.LoginsId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" }) |
+            @Ajax.ActionLink("Delete", "Delete", new { id = item.LoginsId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
         </td>
     </tr>
 }
 
 </table>
 <div>
-    @Html.ActionLink("Back to List", "../Companies/Index", "", new { @class = "btn btn-primary" })
+    @Ajax.ActionLink("Back to List", "Index", "Companies", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </div>

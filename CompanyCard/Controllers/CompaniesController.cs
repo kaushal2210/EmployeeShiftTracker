@@ -19,6 +19,10 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView(db.Companies.ToList());
+                }
                 return View(db.Companies.ToList());
             }
             else
@@ -33,7 +37,7 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                return View();
+                return PartialView();
             }
             else
             {
@@ -57,7 +61,7 @@ namespace CompanyCard.Controllers
                     return RedirectToAction("Index");
                 }
 
-                return View(company);
+                return PartialView("Create", company);
             }
             else
             {
@@ -79,7 +83,10 @@ namespace CompanyCard.Controllers
                 {
                     return View("Error", new ErrorViewModel { Description = "Company not found." });
                 }
-                return View(company);
+                //if (Request.IsAjaxRequest()) {
+                //    return PartialView("Edit",company);
+                //}
+                return PartialView("Edit", company);
             }
             else
             {
@@ -102,7 +109,7 @@ namespace CompanyCard.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                return View(company);
+                return PartialView("Edit", company);
             }
             else
             {
@@ -124,7 +131,7 @@ namespace CompanyCard.Controllers
                 {
                     return View("Error", new ErrorViewModel { Description = "Company not found." });
                 }
-                return View(company);
+                return PartialView("Delete", company);
             }
             else
             {

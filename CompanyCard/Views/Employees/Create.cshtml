@@ -64,7 +64,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index", new { id = Model.Company.CompanyId }, new { @class = "btn btn-primary" })
+    @Ajax.ActionLink("Back to List", "Index","Companies",null,new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </div>
 
 @section Scripts {
