@@ -33,12 +33,12 @@ namespace CompanyCard.Controllers
                 }
                 else
                 {
-                    return View("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -56,7 +56,7 @@ namespace CompanyCard.Controllers
 
             if (user == null)
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your user name or password is wrong, try again!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your user name or password is wrong, try again!!." });
             }
             else
             {
@@ -78,18 +78,18 @@ namespace CompanyCard.Controllers
 
                     if (id == null)
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        return PartialView("Error", new ErrorViewModel { Description = "you should provide loginid." });
                     }
                     Logins logins = db.Logins.Find(id);
                     if (logins == null)
                     {
-                        return HttpNotFound();
+                        return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
                     }
                     return PartialView("Details",db.Logins);
                 }
                 else
                 {
-                    return View("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                 }
             }
             else
@@ -156,7 +156,7 @@ namespace CompanyCard.Controllers
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return PartialView("Error", new ErrorViewModel { Description = "you should provide loginid." });
                 }
                 Logins logins = db.Logins.Find(id);
                 if (Session["Admin"].Equals("Yes") || logins.UserName.Equals(Session["username"]))
@@ -164,7 +164,7 @@ namespace CompanyCard.Controllers
 
                     if (logins == null)
                     {
-                        return HttpNotFound();
+                        return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
                     }
                     return PartialView("Edit",logins);
                 }
@@ -219,12 +219,12 @@ namespace CompanyCard.Controllers
 
                     if (id == null)
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                        return PartialView("Error", new ErrorViewModel { Description = "You should provide loginid." });
                     }
                     Logins logins = db.Logins.Find(id);
                     if (logins == null)
                     {
-                        return HttpNotFound();
+                        return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
                     }
                     return PartialView("Delete",logins);
                 }

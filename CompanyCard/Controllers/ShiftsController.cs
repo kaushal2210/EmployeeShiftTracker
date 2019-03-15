@@ -21,12 +21,12 @@ namespace CompanyCard.Controllers
             {
                 if (id == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "You must have valid employeeid to see the data." });
+                    return PartialView("Error", new ErrorViewModel { Description = "You must have valid employeeid to see the data." });
                 }
                 Employee employee = db.Employees.Find(id);
                 if (employee == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "Company not found." });
+                    return PartialView("Error", new ErrorViewModel { Description = "Company not found." });
                 }
                 ViewBag.EmpoyeeName = employee.EmployeeName;
                 var shiftTemp = from a in db.Shifts.ToList()
@@ -36,7 +36,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
 
         }
@@ -44,23 +44,37 @@ namespace CompanyCard.Controllers
         // GET: Shifts/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["username"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Shift shift = db.Shifts.Find(id);
+                if (shift == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(shift);
             }
-            Shift shift = db.Shifts.Find(id);
-            if (shift == null)
+            else
             {
-                return HttpNotFound();
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
-            return View(shift);
         }
 
         // GET: Shifts/Create
         public ActionResult Create()
         {
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName");
-            return View();
+            if (Session["username"] != null)
+            {
+                ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName");
+                return View();
+            }
+            else
+            {
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+            }
         }
 
         // POST: Shifts/Create
@@ -70,31 +84,45 @@ namespace CompanyCard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ShiftId,StartTime,EndTime,workedHours,EmployeeId")] Shift shift)
         {
-            if (ModelState.IsValid)
+            if (Session["username"] != null)
             {
-                db.Shifts.Add(shift);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Shifts.Add(shift);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);
-            return View(shift);
+                ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);
+                return View(shift);
+            }
+            else
+            {
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+            }
         }
 
         // GET: Shifts/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["username"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Shift shift = db.Shifts.Find(id);
+                if (shift == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);
+                return View(shift);
             }
-            Shift shift = db.Shifts.Find(id);
-            if (shift == null)
+            else
             {
-                return HttpNotFound();
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);
-            return View(shift);
         }
 
         // POST: Shifts/Edit/5
@@ -104,29 +132,43 @@ namespace CompanyCard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ShiftId,StartTime,EndTime,workedHours,EmployeeId")] Shift shift)
         {
-            if (ModelState.IsValid)
+            if (Session["username"] != null)
             {
-                db.Entry(shift).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(shift).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);
+                return View(shift);
             }
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);
-            return View(shift);
+            else
+            {
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+            }
         }
 
         // GET: Shifts/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["username"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Shift shift = db.Shifts.Find(id);
+                if (shift == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(shift);
             }
-            Shift shift = db.Shifts.Find(id);
-            if (shift == null)
+            else
             {
-                return HttpNotFound();
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
-            return View(shift);
         }
 
         // POST: Shifts/Delete/5
@@ -134,34 +176,55 @@ namespace CompanyCard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Shift shift = db.Shifts.Find(id);
-            db.Shifts.Remove(shift);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (Session["username"] != null)
+            {
+                Shift shift = db.Shifts.Find(id);
+                db.Shifts.Remove(shift);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+            }
         }
 
         public ActionResult Start()
         {
-            Session["startTime"] = DateTime.Now;
-            return RedirectToAction("Companies", "Index");
+            if (Session["username"] != null)
+            {
+                Session["startTime"] = DateTime.Now;
+                return RedirectToAction("Companies", "Index");
+            }
+            else
+            {
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+            }
         }
 
         public ActionResult End(int id)
         {
-            var endTime = DateTime.Now;
-            double difference = Math.Round(endTime.Subtract(DateTime.Parse(Session["startTime"].ToString())).TotalHours, 2);
-            //var tempStart = startTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-            //var tempEnd = endTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-            var emp = db.Employees.Find(id);
-            Shift shift = new Shift { StartTime = DateTime.Parse(Session["startTime"].ToString()), EndTime = endTime, workedHours = difference, EmployeeId = id };
-            if (ModelState.IsValid)
+            if (Session["username"] != null)
             {
-                db.Shifts.Add(shift);
-                db.SaveChanges();
+                var endTime = DateTime.Now;
+                double difference = Math.Round(endTime.Subtract(DateTime.Parse(Session["startTime"].ToString())).TotalHours, 2);
+                //var tempStart = startTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                //var tempEnd = endTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                var emp = db.Employees.Find(id);
+                Shift shift = new Shift { StartTime = DateTime.Parse(Session["startTime"].ToString()), EndTime = endTime, workedHours = difference, EmployeeId = id };
+                if (ModelState.IsValid)
+                {
+                    db.Shifts.Add(shift);
+                    db.SaveChanges();
+                    return RedirectToAction("Companies", "Index");
+                }
+                ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);
                 return RedirectToAction("Companies", "Index");
             }
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);
-            return RedirectToAction("Companies", "Index");
+            else
+            {
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+            }
         }
 
         protected override void Dispose(bool disposing)

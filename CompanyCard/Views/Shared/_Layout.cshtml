@@ -33,7 +33,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>@Ajax.ActionLink("Start the Shift", "Start", "Shifts", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand", @id = "Start", @onclick = "startFunction()" })</li>
-                        <li>@Ajax.ActionLink("End the Shift", "End", "Shifts", new { id = Session["EmployeeId"] }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand", @id = "End", @onclick = "endFunction()", @style = "display:none" })</li>
+                        <li>@Ajax.ActionLink("End the Shift", "End", "Shifts", new { id = Session["EmployeeId"] }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand", @id = "End", @onclick = "endFunction()"})</li>
                         @*<li><a id ="End" onclick="endFunction()" style="display:none">End of Shift</a></li>*@
                         <li>@Ajax.ActionLink(Session["username"].ToString(), "Edit", "Logins", new { id = Session["EmployeeId"] }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" })</li>
                         <li>@Html.ActionLink("Log Out", "logout", "Logins")</li>
@@ -42,7 +42,7 @@
             }
         </div>
     </div>
-    <div class="navbar box navbar-right" id="timeContainer" style="display:none">
+    <div class="navbar box navbar-right" id="timeContainer">
         <h1 id="timeLabel"></h1>
     </div>
     <div class="container body-content">
