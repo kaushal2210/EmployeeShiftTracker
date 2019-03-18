@@ -44,6 +44,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.SalaryPerHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SalaryPerHour)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Company.CompanyName)
         </dt>
 
@@ -57,9 +65,9 @@
     {
         @Html.AntiForgeryToken()
 
-    <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        @Ajax.ActionLink("Back to List", "Index", new { id = Model.Company.CompanyId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
-    </div>
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Ajax.ActionLink("Back to List", "Index", new { id = Model.Company.CompanyId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+        </div>
     }
 </div>

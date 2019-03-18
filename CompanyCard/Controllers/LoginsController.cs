@@ -94,7 +94,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -109,12 +109,12 @@ namespace CompanyCard.Controllers
                 }
                 else
                 {
-                    return View("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -139,13 +139,13 @@ namespace CompanyCard.Controllers
                 }
                 else
                 {
-                    return View("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                 }
 
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -170,12 +170,12 @@ namespace CompanyCard.Controllers
                 }
                 else
                 {
-                    return View("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -200,12 +200,12 @@ namespace CompanyCard.Controllers
                 }
                 else
                 {
-                    return View("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -230,12 +230,12 @@ namespace CompanyCard.Controllers
                 }
                 else
                 {
-                    return View("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -256,12 +256,12 @@ namespace CompanyCard.Controllers
                 }
                 else
                 {
-                    return View("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 

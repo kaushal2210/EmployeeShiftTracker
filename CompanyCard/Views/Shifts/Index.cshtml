@@ -26,30 +26,42 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.workedHours)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Employee.EmployeeName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ShiftId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ShiftId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ShiftId })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        ViewBag.SelectedEmplopyeeId = item.EmployeeId;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.workedHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.EmployeeName)
+            </td>
+            <td>
+                @if (Session["Admin"] != null)
+                {
+                    if (Session["Admin"].Equals("Yes"))
+                    {
+                        <span>
+                            | @Ajax.ActionLink("Edit", "Edit", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+                            @* @Html.ActionLink("Edit", "Edit", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })*@
+                        </span>
+                        <span>
+                            | @Ajax.ActionLink("Delete", "Delete", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+                            @*@Html.ActionLink("Delete", "Delete", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })*@
+                        </span>
+                    }
+                }
+            </td>
+        </tr>
+    }
 </table>
+<span>
+    @Ajax.ActionLink("Pay", "Pay", new { id = ViewBag.SelectedEmplopyeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+</span>
 
-<div style="float:right">
-    <h1 style="float:left;clear:none">Total Hours:</h1><h2>@Model.Sum(x => x.workedHours)</h2>
-</div>

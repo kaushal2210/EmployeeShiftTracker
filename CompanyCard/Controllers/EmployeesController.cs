@@ -21,12 +21,12 @@ namespace CompanyCard.Controllers
             {
                 if (id == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "You should select a company." });
+                    return PartialView("Error", new ErrorViewModel { Description = "You should select a company." });
                 }
                 Company company = db.Companies.Find(id);
                 if (company == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "Company not found." });
+                    return PartialView("Error", new ErrorViewModel { Description = "Company not found." });
                 }
                 ViewBag.CompanyName = company.CompanyName;
                 var empTemp = from a in db.Employees.ToList()
@@ -36,7 +36,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -47,18 +47,18 @@ namespace CompanyCard.Controllers
             {
                 if (id == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "You should select an employee." });
+                    return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
                 }
                 Employee employee = db.Employees.Find(id);
                 if (employee == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "Employee not found." });
+                    return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
                 }
                 return PartialView("Details", employee);
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -72,7 +72,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -81,7 +81,7 @@ namespace CompanyCard.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EmployeeId,EmployeeName,EmployeePhoneNo,EmployeeAddress,Email,CompanyCompanyId")] Employee employee)
+        public ActionResult Create([Bind(Include = "EmployeeId,EmployeeName,EmployeePhoneNo,EmployeeAddress,Email,,SalaryPerHour,CompanyCompanyId")] Employee employee)
         {
             if (Session["username"] != null)
             {
@@ -97,7 +97,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -108,19 +108,19 @@ namespace CompanyCard.Controllers
             {
                 if (id == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "You should select an employee." });
+                    return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
                 }
                 Employee employee = db.Employees.Find(id);
                 if (employee == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "Employee not found." });
+                    return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
                 }
                 ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
                 return PartialView("Edit", employee);
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -129,7 +129,7 @@ namespace CompanyCard.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,EmployeeName,EmployeePhoneNo,EmployeeAddress,Email,CompanyCompanyId")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmployeeId,EmployeeName,EmployeePhoneNo,EmployeeAddress,Email,SalaryPerHour,CompanyCompanyId")] Employee employee)
         {
             if (Session["username"] != null)
             {
@@ -144,7 +144,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -155,18 +155,18 @@ namespace CompanyCard.Controllers
             {
                 if (id == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "You should select an employee." });
+                    return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
                 }
                 Employee employee = db.Employees.Find(id);
                 if (employee == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "Employee not found." });
+                    return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
                 }
                 return PartialView("Delete", employee);
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -184,7 +184,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 

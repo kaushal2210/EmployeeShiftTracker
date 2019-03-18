@@ -24,6 +24,9 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.SalaryPerHour)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Company.CompanyName)
         </th>
         <th></th>
@@ -31,43 +34,46 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeePhoneNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Company.CompanyName)
-            </td>
-            <td>
-                @Ajax.ActionLink("Details", "Details", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
-                @if (Session["Admin"] != null)
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeePhoneNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SalaryPerHour)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Company.CompanyName)
+        </td>
+        <td>
+            @Ajax.ActionLink("Details", "Details", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+            @if (Session["Admin"] != null)
+            {
+                if (Session["Admin"].Equals("Yes"))
                 {
-                    if (Session["Admin"].Equals("Yes"))
-                    {
-                        <span>
-                            | @Ajax.ActionLink("Edit", "Edit", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
-                            @*  @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeId }, new { @class = "btn btn-primary btn-sm" })*@
-                        </span>
-                        <span>
-                            | @Ajax.ActionLink("Delete", "Delete", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
-                            @*@Html.ActionLink("Delete", "Delete", new { id = item.EmployeeId }, new { @class = "btn btn-primary btn-sm" })*@
-                        </span>
-                    }
+                    <span>
+                        | @Ajax.ActionLink("Edit", "Edit", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+                        @*  @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeId }, new { @class = "btn btn-primary btn-sm" })*@
+                    </span>
+                    <span>
+                        | @Ajax.ActionLink("Delete", "Delete", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+                        @*@Html.ActionLink("Delete", "Delete", new { id = item.EmployeeId }, new { @class = "btn btn-primary btn-sm" })*@
+                    </span>
                 }
-            </td>
+            }
+        </td>
 
-        </tr>
+    </tr>
     }
 </table>
 <div>
-    @Ajax.ActionLink("Back to List", "Index", "Companies",null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    @Ajax.ActionLink("Back to List", "Index", "Companies", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </div>

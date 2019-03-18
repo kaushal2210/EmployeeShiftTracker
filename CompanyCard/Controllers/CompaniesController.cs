@@ -27,7 +27,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
 
         }
@@ -41,7 +41,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -65,7 +65,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -76,12 +76,12 @@ namespace CompanyCard.Controllers
             {
                 if (id == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "You should select a company." });
+                    return PartialView("Error", new ErrorViewModel { Description = "You should select a company." });
                 }
                 Company company = db.Companies.Find(id);
                 if (company == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "Company not found." });
+                    return PartialView("Error", new ErrorViewModel { Description = "Company not found." });
                 }
                 //if (Request.IsAjaxRequest()) {
                 //    return PartialView("Edit",company);
@@ -90,7 +90,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -113,7 +113,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -124,7 +124,7 @@ namespace CompanyCard.Controllers
             {
                 if (id == null)
                 {
-                    return View("Error", new ErrorViewModel { Description = "You should select a company." });
+                    return PartialView("Error", new ErrorViewModel { Description = "You should select a company." });
                 }
                 Company company = db.Companies.Find(id);
                 if (company == null)
@@ -135,7 +135,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -153,7 +153,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 

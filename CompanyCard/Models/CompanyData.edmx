@@ -24,6 +24,7 @@
           <Property Name="EmployeePhoneNo" Type="nvarchar(max)" Nullable="false" />
           <Property Name="EmployeeAddress" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SalaryPerHour" Type="money" Nullable="false" />
           <Property Name="CompanyCompanyId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Logins">
@@ -146,6 +147,7 @@
           <Property Name="CompanyCompanyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Logins" Relationship="CompanyData.FK_Logins_Employees" FromRole="Employee" ToRole="Logins" />
           <NavigationProperty Name="Shifts" Relationship="CompanyData.FK_Shifts_Employees" FromRole="Employee" ToRole="Shift" />
+          <Property Name="SalaryPerHour" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
         </EntityType>
         <Association Name="CompanyEmployee">
           <End Type="CompanyData.Company" Role="Company" Multiplicity="1" />
@@ -225,7 +227,8 @@
     <EntitySetMapping Name="Employees">
       <EntityTypeMapping TypeName="IsTypeOf(CompanyData.Employee)">
         <MappingFragment StoreEntitySet="Employees">
-          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="SalaryPerHour" ColumnName="SalaryPerHour" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
           <ScalarProperty Name="EmployeePhoneNo" ColumnName="EmployeePhoneNo" />
           <ScalarProperty Name="EmployeeAddress" ColumnName="EmployeeAddress" />
