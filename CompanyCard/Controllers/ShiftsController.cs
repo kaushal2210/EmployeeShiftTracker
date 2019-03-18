@@ -149,7 +149,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -180,7 +180,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -209,7 +209,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -235,7 +235,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -248,7 +248,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -273,7 +273,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -302,7 +302,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 

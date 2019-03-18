@@ -20,15 +20,12 @@
         <th>
             @Html.DisplayNameFor(model => model.workedHours)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Employee.EmployeeName)
-        </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        ViewBag.SelectedEmplopyeeId = item.EmployeeId;
+        ViewBag.SelectedEmployeeId = item.EmployeeId;
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.StartTime)
@@ -40,15 +37,12 @@
                 @Html.DisplayFor(modelItem => item.workedHours)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Employee.EmployeeName)
-            </td>
-            <td>
                 @if (Session["Admin"] != null)
                 {
                     if (Session["Admin"].Equals("Yes"))
                     {
                         <span>
-                            | @Ajax.ActionLink("Edit", "Edit", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+                            @Ajax.ActionLink("Edit", "Edit", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
                             @* @Html.ActionLink("Edit", "Edit", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })*@
                         </span>
                         <span>
@@ -62,6 +56,6 @@
     }
 </table>
 <span>
-    @Ajax.ActionLink("Pay", "Pay", new { id = ViewBag.SelectedEmplopyeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    @Ajax.ActionLink("Pay", "Pay", new { id = ViewBag.SelectedEmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </span>
 

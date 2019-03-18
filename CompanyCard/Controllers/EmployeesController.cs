@@ -19,6 +19,7 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
+
                 if (id == null)
                 {
                     return PartialView("Error", new ErrorViewModel { Description = "You should select a company." });
@@ -36,7 +37,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -58,7 +59,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -67,12 +68,19 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName");
-                return PartialView();
+                if (Session["Admin"].Equals("Yes"))
+                {
+                    ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName");
+                    return PartialView();
+                }
+                else
+                {
+                    return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                }
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -85,19 +93,26 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Admin"].Equals("Yes"))
                 {
-                    db.Employees.Add(employee);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+                    if (ModelState.IsValid)
+                    {
+                        db.Employees.Add(employee);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
 
-                ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
-                return PartialView("Create", employee);
+                    ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
+                    return PartialView("Create", employee);
+                }
+                else
+                {
+                    return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                }
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -106,21 +121,28 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (id == null)
+                if (Session["Admin"].Equals("Yes"))
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
+                    if (id == null)
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
+                    }
+                    Employee employee = db.Employees.Find(id);
+                    if (employee == null)
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
+                    }
+                    ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
+                    return PartialView("Edit", employee);
                 }
-                Employee employee = db.Employees.Find(id);
-                if (employee == null)
+                else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
+                    return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
                 }
-                ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
-                return PartialView("Edit", employee);
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -133,18 +155,25 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (ModelState.IsValid)
+                if (Session["Admin"].Equals("Yes"))
                 {
-                    db.Entry(employee).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(employee).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
+                    return PartialView("Edit", employee);
                 }
-                ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
-                return PartialView("Edit", employee);
+                else
+                {
+                    return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                }
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -153,20 +182,27 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (id == null)
+                if (Session["Admin"].Equals("Yes"))
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
+                    if (id == null)
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
+                    }
+                    Employee employee = db.Employees.Find(id);
+                    if (employee == null)
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
+                    }
+                    return PartialView("Delete", employee);
                 }
-                Employee employee = db.Employees.Find(id);
-                if (employee == null)
+                else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
+                    return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
                 }
-                return PartialView("Delete", employee);
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -177,14 +213,21 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                Employee employee = db.Employees.Find(id);
-                db.Employees.Remove(employee);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (Session["Admin"].Equals("Yes"))
+                {
+                    Employee employee = db.Employees.Find(id);
+                    db.Employees.Remove(employee);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                }
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 

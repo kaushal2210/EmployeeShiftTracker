@@ -38,14 +38,21 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
         public ActionResult logout()
         {
-            Session.Abandon();
-            return RedirectToAction("loginPage", "Logins");
+            if (Session["username"] != null)
+            {
+                Session.Abandon();
+                return RedirectToAction("loginPage", "Logins");
+            }
+            else
+            {
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+            }
         }
 
         [HttpPost]
@@ -85,7 +92,7 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
                     }
-                    return PartialView("Details",db.Logins);
+                    return PartialView("Details", db.Logins);
                 }
                 else
                 {
@@ -94,7 +101,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -114,7 +121,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -135,7 +142,7 @@ namespace CompanyCard.Controllers
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
-                    return PartialView("Create",logins);
+                    return PartialView("Create", logins);
                 }
                 else
                 {
@@ -145,7 +152,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -166,7 +173,7 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
                     }
-                    return PartialView("Edit",logins);
+                    return PartialView("Edit", logins);
                 }
                 else
                 {
@@ -175,7 +182,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -196,7 +203,7 @@ namespace CompanyCard.Controllers
                         db.SaveChanges();
                         return RedirectToAction("Index");
                     }
-                    return PartialView("Edit",logins);
+                    return PartialView("Edit", logins);
                 }
                 else
                 {
@@ -205,7 +212,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -226,7 +233,7 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
                     }
-                    return PartialView("Delete",logins);
+                    return PartialView("Delete", logins);
                 }
                 else
                 {
@@ -235,7 +242,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 
@@ -261,7 +268,7 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return PartialView("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
             }
         }
 

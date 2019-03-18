@@ -18,17 +18,12 @@
             @Html.DisplayNameFor(model => model.EmployeePhoneNo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EmployeeAddress)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SalaryPerHour)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Company.CompanyName)
-        </th>
+        
         <th></th>
     </tr>
 
@@ -42,19 +37,14 @@
             @Html.DisplayFor(modelItem => item.EmployeePhoneNo)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EmployeeAddress)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.SalaryPerHour)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Company.CompanyName)
-        </td>
-        <td>
             @Ajax.ActionLink("Details", "Details", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+            | @Ajax.ActionLink("Unpaid Hours", "Index", "Shifts", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
             @if (Session["Admin"] != null)
             {
                 if (Session["Admin"].Equals("Yes"))
