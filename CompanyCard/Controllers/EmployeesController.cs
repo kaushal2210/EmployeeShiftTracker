@@ -19,21 +19,27 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-
-                if (id == null)
+                if (Request.IsAjaxRequest())
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "You should select a company." });
+                    if (id == null)
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "You should select a company." });
+                    }
+                    Company company = db.Companies.Find(id);
+                    if (company == null)
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "Company not found." });
+                    }
+                    ViewBag.CompanyName = company.CompanyName;
+                    var empTemp = from a in db.Employees.ToList()
+                                  where a.CompanyCompanyId == company.CompanyId
+                                  select a;
+                    return PartialView(empTemp);
                 }
-                Company company = db.Companies.Find(id);
-                if (company == null)
+                else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "Company not found." });
+                    return HttpNotFound();
                 }
-                ViewBag.CompanyName = company.CompanyName;
-                var empTemp = from a in db.Employees.ToList()
-                              where a.CompanyCompanyId == company.CompanyId
-                              select a;
-                return PartialView(empTemp);
             }
             else
             {
@@ -46,16 +52,23 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (id == null)
+                if (Request.IsAjaxRequest())
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
+                    if (id == null)
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
+                    }
+                    Employee employee = db.Employees.Find(id);
+                    if (employee == null)
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
+                    }
+                    return PartialView("Details", employee);
                 }
-                Employee employee = db.Employees.Find(id);
-                if (employee == null)
+                else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
+                    return HttpNotFound();
                 }
-                return PartialView("Details", employee);
             }
             else
             {
@@ -68,14 +81,21 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes"))
+                if (Request.IsAjaxRequest())
                 {
-                    ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName");
-                    return PartialView();
+                    if (Session["Admin"].Equals("Yes"))
+                    {
+                        ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName");
+                        return PartialView();
+                    }
+                    else
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                    }
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                    return HttpNotFound();
                 }
             }
             else
@@ -93,21 +113,28 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes"))
+                if (Request.IsAjaxRequest())
                 {
-                    if (ModelState.IsValid)
+                    if (Session["Admin"].Equals("Yes"))
                     {
-                        db.Employees.Add(employee);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
-                    }
+                        if (ModelState.IsValid)
+                        {
+                            db.Employees.Add(employee);
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
 
-                    ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
-                    return PartialView("Create", employee);
+                        ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
+                        return PartialView("Create", employee);
+                    }
+                    else
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                    }
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                    return HttpNotFound();
                 }
             }
             else
@@ -121,23 +148,30 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes"))
+                if (Request.IsAjaxRequest())
                 {
-                    if (id == null)
+                    if (Session["Admin"].Equals("Yes"))
                     {
-                        return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
+                        if (id == null)
+                        {
+                            return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
+                        }
+                        Employee employee = db.Employees.Find(id);
+                        if (employee == null)
+                        {
+                            return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
+                        }
+                        ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
+                        return PartialView("Edit", employee);
                     }
-                    Employee employee = db.Employees.Find(id);
-                    if (employee == null)
+                    else
                     {
-                        return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
+                        return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
                     }
-                    ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
-                    return PartialView("Edit", employee);
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                    return HttpNotFound();
                 }
             }
             else
@@ -155,20 +189,27 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes"))
+                if (Request.IsAjaxRequest())
                 {
-                    if (ModelState.IsValid)
+                    if (Session["Admin"].Equals("Yes"))
                     {
-                        db.Entry(employee).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        if (ModelState.IsValid)
+                        {
+                            db.Entry(employee).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
+                        return PartialView("Edit", employee);
                     }
-                    ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
-                    return PartialView("Edit", employee);
+                    else
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                    }
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                    return HttpNotFound();
                 }
             }
             else
@@ -182,22 +223,29 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes"))
+                if (Request.IsAjaxRequest())
                 {
-                    if (id == null)
+                    if (Session["Admin"].Equals("Yes"))
                     {
-                        return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
+                        if (id == null)
+                        {
+                            return PartialView("Error", new ErrorViewModel { Description = "You should select an employee." });
+                        }
+                        Employee employee = db.Employees.Find(id);
+                        if (employee == null)
+                        {
+                            return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
+                        }
+                        return PartialView("Delete", employee);
                     }
-                    Employee employee = db.Employees.Find(id);
-                    if (employee == null)
+                    else
                     {
-                        return PartialView("Error", new ErrorViewModel { Description = "Employee not found." });
+                        return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
                     }
-                    return PartialView("Delete", employee);
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                    return HttpNotFound();
                 }
             }
             else
@@ -213,16 +261,23 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes"))
+                if (Request.IsAjaxRequest())
                 {
-                    Employee employee = db.Employees.Find(id);
-                    db.Employees.Remove(employee);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (Session["Admin"].Equals("Yes"))
+                    {
+                        Employee employee = db.Employees.Find(id);
+                        db.Employees.Remove(employee);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                    }
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
+                    return HttpNotFound();
                 }
             }
             else

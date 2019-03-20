@@ -80,23 +80,30 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes"))
+                if (Request.IsAjaxRequest())
                 {
+                    if (Session["Admin"].Equals("Yes"))
+                    {
 
-                    if (id == null)
-                    {
-                        return PartialView("Error", new ErrorViewModel { Description = "you should provide loginid." });
+                        if (id == null)
+                        {
+                            return PartialView("Error", new ErrorViewModel { Description = "you should provide loginid." });
+                        }
+                        Logins logins = db.Logins.Find(id);
+                        if (logins == null)
+                        {
+                            return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
+                        }
+                        return PartialView("Details", db.Logins);
                     }
-                    Logins logins = db.Logins.Find(id);
-                    if (logins == null)
+                    else
                     {
-                        return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
+                        return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                     }
-                    return PartialView("Details", db.Logins);
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return HttpNotFound();
                 }
             }
             else
@@ -110,13 +117,20 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes"))
+                if (Request.IsAjaxRequest())
                 {
-                    return PartialView();
+                    if (Session["Admin"].Equals("Yes"))
+                    {
+                        return PartialView();
+                    }
+                    else
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    }
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return HttpNotFound();
                 }
             }
             else
@@ -134,19 +148,26 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes"))
+                if (Request.IsAjaxRequest())
                 {
-                    if (ModelState.IsValid)
+                    if (Session["Admin"].Equals("Yes"))
                     {
-                        db.Logins.Add(logins);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        if (ModelState.IsValid)
+                        {
+                            db.Logins.Add(logins);
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        return PartialView("Create", logins);
                     }
-                    return PartialView("Create", logins);
+                    else
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    }
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return HttpNotFound();
                 }
 
             }
@@ -161,23 +182,30 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (id == null)
+                if (Request.IsAjaxRequest())
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "you should provide loginid." });
-                }
-                Logins logins = db.Logins.Find(id);
-                if (Session["Admin"].Equals("Yes") || logins.UserName.Equals(Session["username"]))
-                {
-
-                    if (logins == null)
+                    if (id == null)
                     {
-                        return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
+                        return PartialView("Error", new ErrorViewModel { Description = "you should provide loginid." });
                     }
-                    return PartialView("Edit", logins);
+                    Logins logins = db.Logins.Find(id);
+                    if (Session["Admin"].Equals("Yes") || logins.UserName.Equals(Session["username"]))
+                    {
+
+                        if (logins == null)
+                        {
+                            return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
+                        }
+                        return PartialView("Edit", logins);
+                    }
+                    else
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    }
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return HttpNotFound();
                 }
             }
             else
@@ -195,19 +223,26 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes") || logins.UserName.Equals(Session["username"]))
+                if (Request.IsAjaxRequest())
                 {
-                    if (ModelState.IsValid)
+                    if (Session["Admin"].Equals("Yes") || logins.UserName.Equals(Session["username"]))
                     {
-                        db.Entry(logins).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        if (ModelState.IsValid)
+                        {
+                            db.Entry(logins).State = EntityState.Modified;
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        return PartialView("Edit", logins);
                     }
-                    return PartialView("Edit", logins);
+                    else
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    }
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return HttpNotFound();
                 }
             }
             else
@@ -221,23 +256,30 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes"))
+                if (Request.IsAjaxRequest())
                 {
+                    if (Session["Admin"].Equals("Yes"))
+                    {
 
-                    if (id == null)
-                    {
-                        return PartialView("Error", new ErrorViewModel { Description = "You should provide loginid." });
+                        if (id == null)
+                        {
+                            return PartialView("Error", new ErrorViewModel { Description = "You should provide loginid." });
+                        }
+                        Logins logins = db.Logins.Find(id);
+                        if (logins == null)
+                        {
+                            return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
+                        }
+                        return PartialView("Delete", logins);
                     }
-                    Logins logins = db.Logins.Find(id);
-                    if (logins == null)
+                    else
                     {
-                        return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
+                        return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                     }
-                    return PartialView("Delete", logins);
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return HttpNotFound();
                 }
             }
             else
@@ -253,17 +295,24 @@ namespace CompanyCard.Controllers
         {
             if (Session["username"] != null)
             {
-                if (Session["Admin"].Equals("Yes"))
+                if (Request.IsAjaxRequest())
                 {
+                    if (Session["Admin"].Equals("Yes"))
+                    {
 
-                    Logins logins = db.Logins.Find(id);
-                    db.Logins.Remove(logins);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                        Logins logins = db.Logins.Find(id);
+                        db.Logins.Remove(logins);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    }
                 }
                 else
                 {
-                    return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    return HttpNotFound();
                 }
             }
             else

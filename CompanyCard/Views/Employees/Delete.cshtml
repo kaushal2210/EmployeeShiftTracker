@@ -61,7 +61,7 @@
 
     </dl>
 
-    @using (Html.BeginForm())
+    @using (Ajax.BeginForm("Delete", "Employees", FormMethod.Post, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace }))
     {
         @Html.AntiForgeryToken()
 

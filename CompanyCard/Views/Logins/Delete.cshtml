@@ -37,7 +37,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Ajax.BeginForm("Delete", "Logins", FormMethod.Post, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace }))
+    {
         @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">

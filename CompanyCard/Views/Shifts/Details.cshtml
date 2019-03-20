@@ -46,5 +46,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ShiftId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Ajax.ActionLink("Back to List", "Index", new { id = Model.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </p>
