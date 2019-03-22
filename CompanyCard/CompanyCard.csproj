@@ -311,6 +311,7 @@
     <Content Include="Views\Shifts\Edit.cshtml" />
     <Content Include="Views\Shifts\Index.cshtml" />
     <Content Include="Views\Shifts\PaidIndex.cshtml" />
+    <Content Include="Views\Shared\Error404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

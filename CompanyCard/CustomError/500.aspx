@@ -25,7 +25,6 @@
             <h2>Oops! Internal server error</h2>
             <strong>Error!</strong> Something wrong on serverside, contact web provider.
         </div>
-        <a href="../Companies/Index" class ="btn btn-primary btn-lg">Go To Homepage</a>
     </div>
 </body>
 </html>

@@ -21,7 +21,14 @@
                     <span class="icon-bar"></span>
                 </button>
                 <span class="icon-bar"><img src="~/Image/loading.gif" id="loadingImage" alt="Loading Image" title="Loding Image" style="display:none;height:50px"></span>
-                @Ajax.ActionLink("Employee Information App", "Index", "Companies", null, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand" })
+                @if (Session["username"] != null)
+                {
+                    @Ajax.ActionLink("Employee Information App", "Index", "Companies", null, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand" })
+                }
+                else
+                {
+                    @Ajax.ActionLink("Employee Information App", "loginPage", "Logins", null, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand" })
+                }
             </div>
             @if (Session["username"] != null)
             {
@@ -45,7 +52,7 @@
         </div>
     </div>
     
-    <div class="navbar box navbar-right" id="timeContainer">
+    <div class="navbar box navbar-right" id="timeContainer" style="display:none">
         <h1 id="timeLabel"></h1>
     </div>
     <div class="container body-content">

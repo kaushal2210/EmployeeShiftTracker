@@ -35,10 +35,11 @@ namespace CompanyCard.Controllers
         // GET: Companies/Create
         public ActionResult Create()
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         return PartialView();
@@ -47,15 +48,16 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
@@ -66,10 +68,11 @@ namespace CompanyCard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CompanyId,CompanyName,CompanyAddress,ContactNo,Website")] Company company)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         if (ModelState.IsValid)
@@ -85,25 +88,27 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
         // GET: Companies/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         if (id == null)
@@ -115,24 +120,22 @@ namespace CompanyCard.Controllers
                         {
                             return PartialView("Error", new ErrorViewModel { Description = "Company not found." });
                         }
-                        //if (Request.IsAjaxRequest()) {
-                        //    return PartialView("Edit",company);
-                        //}
                         return PartialView("Edit", company);
                     }
                     else
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
@@ -143,10 +146,11 @@ namespace CompanyCard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CompanyId,CompanyName,CompanyAddress,ContactNo,Website")] Company company)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         if (ModelState.IsValid)
@@ -161,25 +165,27 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
         // GET: Companies/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         if (id == null)
@@ -197,15 +203,16 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
@@ -214,10 +221,11 @@ namespace CompanyCard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         Company company = db.Companies.Find(id);
@@ -229,15 +237,16 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "Only Admins can do this!!." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 

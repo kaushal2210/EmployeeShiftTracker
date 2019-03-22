@@ -22,10 +22,6 @@
     <tbody>
         @foreach (var item in Model)
         {
-            ViewBag.EmployeeName = item.Employee.EmployeeName;
-            ViewBag.CompanyID = item.Employee.CompanyCompanyId;
-            ViewBag.Salary = item.Employee.SalaryPerHour;
-            ViewBag.SelectedEmployeeId = item.EmployeeId;
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.StartTime)
@@ -39,24 +35,24 @@
             </tr>
         }
     </tbody>
-    <tfoot>
-        <tr>
-            <td>Employee:</td>
-            <td>@ViewBag.EmployeeName</td>
-        </tr>
-        <tr>
-            <td>Total worked hours:</td>
-            <td>@Model.Sum(i => i.workedHours)</td>
-        </tr>
-        <tr>
-            <td>How many Days worked:</td>
-            <td>@Model.Count()</td>
-        </tr>
-        <tr>
-            <td>Salary(per hour):</td>
-            <td>@ViewBag.Salary</td>
-        </tr>
-    </tfoot>
+</table>
+<table class=" bottom table table-striped">
+    <tr>
+        <td>Employee:</td>
+        <td>@ViewBag.EmployeeName</td>
+    </tr>
+    <tr>
+        <td>Total worked hours:</td>
+        <td>@Model.Sum(i => i.workedHours)</td>
+    </tr>
+    <tr>
+        <td>How many Days worked:</td>
+        <td>@Model.Count()</td>
+    </tr>
+    <tr>
+        <td>Salary:</td>
+        <td>@ViewBag.Salary</td>
+    </tr>
 </table>
 <span>
     @Ajax.ActionLink("Back to List", "Index", "Employees", new { id = ViewBag.CompanyID }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })

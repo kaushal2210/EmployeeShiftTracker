@@ -55,7 +55,8 @@
             </tr>
         }
     </tbody>
-    <tfoot>
+</table>
+    <table class=" bottom table table-striped">
         <tr>
             <td>Employee:</td>
             <td>@ViewBag.EmployeeName</td>
@@ -72,15 +73,13 @@
             <td>Salary:</td>
             <td>@ViewBag.Salary</td>
         </tr>
-    </tfoot>
-</table>
-
-<span>
-    @Ajax.ActionLink("Back to List", "Index", "Employees", new { id = ViewBag.CompanyID }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
-</span>
-<span>
-    @Ajax.ActionLink("Pay", "Pay", new { id = ViewBag.EmployeeID }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", Confirm = "Do you want to pay this employee?", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
-</span>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    </table>
+    <span>
+        @Ajax.ActionLink("Back to List", "Index", "Employees", new { id = ViewBag.CompanyID }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    </span>
+    <span>
+        @Ajax.ActionLink("Pay", "Pay", new { id = ViewBag.EmployeeID }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", Confirm = "Do you want to pay this employee?", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    </span>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

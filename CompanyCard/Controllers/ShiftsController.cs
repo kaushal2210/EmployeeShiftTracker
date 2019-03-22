@@ -17,10 +17,11 @@ namespace CompanyCard.Controllers
         // GET: Shifts
         public ActionResult Index(int? id)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (id == null)
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "You must have valid employeeid to see the data." });
@@ -32,30 +33,33 @@ namespace CompanyCard.Controllers
                     }
                     ViewBag.EmployeeID = employee.EmployeeId;
                     ViewBag.EmployeeName = employee.EmployeeName;
+                    ViewBag.Salary = employee.SalaryPerHour;
                     ViewBag.CompanyID = employee.CompanyCompanyId;
                     var shiftTemp = from a in db.Shifts.ToList()
                                     where a.EmployeeId == employee.EmployeeId
                                     select a;
                     return PartialView(shiftTemp);
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
 
         }
 
         public ActionResult PaidIndex(int? id)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (id == null)
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "You must have valid employeeid to see the data." });
@@ -65,20 +69,24 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "Company not found." });
                     }
-                    ViewBag.EmpoyeeName = employee.EmployeeName;
+                    ViewBag.EmployeeID = employee.EmployeeId;
+                    ViewBag.EmployeeName = employee.EmployeeName;
+                    ViewBag.Salary = employee.SalaryPerHour;
+                    ViewBag.CompanyID = employee.CompanyCompanyId;
                     var shiftTemp = from a in db.PaidShifts.ToList()
                                     where a.EmployeeId == employee.EmployeeId
                                     select a;
                     return PartialView(shiftTemp);
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
 
         }
@@ -88,10 +96,11 @@ namespace CompanyCard.Controllers
         // GET: Shifts/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         if (id == null)
@@ -109,25 +118,27 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
         // GET: Shifts/Create
         public ActionResult Create()
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName");
@@ -137,15 +148,16 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
@@ -156,10 +168,11 @@ namespace CompanyCard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ShiftId,StartTime,EndTime,workedHours,EmployeeId")] Shift shift)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         if (ModelState.IsValid)
@@ -176,25 +189,27 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
         // GET: Shifts/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         if (id == null)
@@ -213,15 +228,16 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
@@ -232,10 +248,11 @@ namespace CompanyCard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ShiftId,StartTime,EndTime,workedHours,EmployeeId")] Shift shift)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         if (ModelState.IsValid)
@@ -251,25 +268,27 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
         // GET: Shifts/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         if (id == null)
@@ -287,15 +306,16 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
@@ -304,11 +324,11 @@ namespace CompanyCard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         Shift shift = db.Shifts.Find(id);
@@ -320,24 +340,26 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
         public ActionResult Start()
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     Session["startTime"] = DateTime.Now;
                     return RedirectToAction("Companies", "Index");
                 }
@@ -348,16 +370,17 @@ namespace CompanyCard.Controllers
             }
             else
             {
-                return HttpNotFound();
+                return View("Error404");
             }
         }
 
         public ActionResult End(int id)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     var endTime = DateTime.Now;
                     double difference = Math.Round(endTime.Subtract(DateTime.Parse(Session["startTime"].ToString())).TotalHours, 2);
                     //var tempStart = startTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
@@ -372,24 +395,26 @@ namespace CompanyCard.Controllers
                     }
                     ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);
                     return RedirectToAction("Companies", "Index");
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 
         public ActionResult Pay(int? id)
         {
-            if (Session["username"] != null)
+            if (Request.IsAjaxRequest())
             {
-                if (Request.IsAjaxRequest())
+                if (Session["username"] != null)
                 {
+
                     if (Session["Admin"].Equals("Yes"))
                     {
                         int? tempId = id;
@@ -408,15 +433,16 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
                     }
+
                 }
                 else
                 {
-                    return HttpNotFound();
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
                 }
             }
             else
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                return View("Error404");
             }
         }
 

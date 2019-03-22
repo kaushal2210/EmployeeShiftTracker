@@ -12,7 +12,7 @@
             <h2>Oops!</h2>
             <strong>Error!</strong>  @Model.Description
         </div>
-        @Html.ActionLink("Back to CompanyList", "../Companies/Index", "", new { @class = "btn btn-primary btn-lg" })
+        @Ajax.ActionLink("Back to List", "Index", "Companies", new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
     </div>
 </body>
 </html>
