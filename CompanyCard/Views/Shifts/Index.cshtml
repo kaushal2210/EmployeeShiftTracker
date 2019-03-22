@@ -25,10 +25,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            ViewBag.EmployeeName = item.Employee.EmployeeName;
-            ViewBag.CompanyId = item.Employee.CompanyCompanyId;
-            ViewBag.Salary = item.Employee.SalaryPerHour;
-            ViewBag.SelectedEmployeeId = item.EmployeeId;
+            
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.StartTime)
@@ -72,19 +69,17 @@
             <td>@Model.Count()</td>
         </tr>
         <tr>
-            <td>Salary(per hour):</td>
+            <td>Salary:</td>
             <td>@ViewBag.Salary</td>
         </tr>
     </tfoot>
 </table>
-<div>
 
-</div>
 <span>
-    @Ajax.ActionLink("Back to List", "Index", "Employees",new { id = ViewBag.CompanyId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    @Ajax.ActionLink("Back to List", "Index", "Employees", new { id = ViewBag.CompanyID }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </span>
 <span>
-    @Ajax.ActionLink("Pay", "Pay", new { id = ViewBag.SelectedEmployeeId }, new AjaxOptions { Confirm = "Do you want to pay this employee?", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    @Ajax.ActionLink("Pay", "Pay", new { id = ViewBag.EmployeeID }, new AjaxOptions { Confirm = "Do you want to pay this employee?", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </span>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

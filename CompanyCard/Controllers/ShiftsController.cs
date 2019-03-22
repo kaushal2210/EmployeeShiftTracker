@@ -30,7 +30,9 @@ namespace CompanyCard.Controllers
                     {
                         return PartialView("Error", new ErrorViewModel { Description = "Company not found." });
                     }
-                    ViewBag.EmpoyeeName = employee.EmployeeName;
+                    ViewBag.EmployeeID = employee.EmployeeId;
+                    ViewBag.EmployeeName = employee.EmployeeName;
+                    ViewBag.CompanyID = employee.CompanyCompanyId;
                     var shiftTemp = from a in db.Shifts.ToList()
                                     where a.EmployeeId == employee.EmployeeId
                                     select a;
@@ -47,6 +49,41 @@ namespace CompanyCard.Controllers
             }
 
         }
+
+        public ActionResult PaidIndex(int? id)
+        {
+            if (Session["username"] != null)
+            {
+                if (Request.IsAjaxRequest())
+                {
+                    if (id == null)
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "You must have valid employeeid to see the data." });
+                    }
+                    Employee employee = db.Employees.Find(id);
+                    if (employee == null)
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "Company not found." });
+                    }
+                    ViewBag.EmpoyeeName = employee.EmployeeName;
+                    var shiftTemp = from a in db.PaidShifts.ToList()
+                                    where a.EmployeeId == employee.EmployeeId
+                                    select a;
+                    return PartialView(shiftTemp);
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            else
+            {
+                return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+            }
+
+        }
+
+
 
         // GET: Shifts/Details/5
         public ActionResult Details(int? id)
@@ -359,9 +396,9 @@ namespace CompanyCard.Controllers
                         var deleteList = from x in db.Shifts
                                          where x.EmployeeId == id
                                          select x;
-
                         foreach (Shift temp in deleteList)
                         {
+                            db.PaidShifts.Add(new PaidShift { StartTime = temp.StartTime, EndTime = temp.EndTime, workedHours = temp.workedHours, EmployeeId = temp.EmployeeId });
                             db.Shifts.Remove(temp);
                         }
                         db.SaveChanges();

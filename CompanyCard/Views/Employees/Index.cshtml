@@ -45,6 +45,7 @@
         <td>
             @Ajax.ActionLink("Details", "Details", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
             | @Ajax.ActionLink("Unpaid Hours", "Index", "Shifts", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+            | @Ajax.ActionLink("Paid Hours", "PaidIndex", "Shifts", new { id = item.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
             @if (Session["Admin"] != null)
             {
                 if (Session["Admin"].Equals("Yes"))

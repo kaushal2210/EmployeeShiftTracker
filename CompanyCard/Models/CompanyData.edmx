@@ -37,6 +37,16 @@
           <Property Name="Admin" Type="nvarchar(max)" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="PaidShifts">
+          <Key>
+            <PropertyRef Name="ShiftPaidId" />
+          </Key>
+          <Property Name="ShiftPaidId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="workedHours" Type="float" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Shifts">
           <Key>
             <PropertyRef Name="ShiftId" />
@@ -71,6 +81,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PaidShifts_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="PaidShifts" Type="Self.PaidShifts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="PaidShifts">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Shifts_Employees">
           <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
           <End Role="Shifts" Type="Self.Shifts" Multiplicity="*" />
@@ -87,6 +109,7 @@
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaidShifts" EntityType="Self.PaidShifts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shifts" EntityType="Self.Shifts" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CompanyEmployee" Association="Self.FK_CompanyEmployee">
             <End Role="Companies" EntitySet="Companies" />
@@ -95,6 +118,10 @@
           <AssociationSet Name="FK_Logins_Employees" Association="Self.FK_Logins_Employees">
             <End Role="Employees" EntitySet="Employees" />
             <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaidShifts_Employees" Association="Self.FK_PaidShifts_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="PaidShifts" EntitySet="PaidShifts" />
           </AssociationSet>
           <AssociationSet Name="FK_Shifts_Employees" Association="Self.FK_Shifts_Employees">
             <End Role="Employees" EntitySet="Employees" />
@@ -122,6 +149,11 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Shift" EntitySet="Shifts" />
           </AssociationSet>
+          <EntitySet Name="PaidShifts" EntityType="CompanyData.PaidShift" />
+          <AssociationSet Name="FK_PaidShifts_Employees" Association="CompanyData.FK_PaidShifts_Employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="PaidShift" EntitySet="PaidShifts" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -148,6 +180,7 @@
           <NavigationProperty Name="Logins" Relationship="CompanyData.FK_Logins_Employees" FromRole="Employee" ToRole="Logins" />
           <NavigationProperty Name="Shifts" Relationship="CompanyData.FK_Shifts_Employees" FromRole="Employee" ToRole="Shift" />
           <Property Name="SalaryPerHour" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="PaidShifts" Relationship="CompanyData.FK_PaidShifts_Employees" FromRole="Employee" ToRole="PaidShift" />
         </EntityType>
         <Association Name="CompanyEmployee">
           <End Type="CompanyData.Company" Role="Company" Multiplicity="1" />
@@ -207,6 +240,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PaidShift">
+          <Key>
+            <PropertyRef Name="ShiftPaidId" />
+          </Key>
+          <Property Name="ShiftPaidId" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="workedHours" Type="Double" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="CompanyData.FK_PaidShifts_Employees" FromRole="PaidShift" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_PaidShifts_Employees">
+          <End Type="CompanyData.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="CompanyData.PaidShift" Role="PaidShift" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="PaidShift">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -227,13 +283,13 @@
     <EntitySetMapping Name="Employees">
       <EntityTypeMapping TypeName="IsTypeOf(CompanyData.Employee)">
         <MappingFragment StoreEntitySet="Employees">
-          <ScalarProperty Name="SalaryPerHour" ColumnName="SalaryPerHour" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
           <ScalarProperty Name="EmployeePhoneNo" ColumnName="EmployeePhoneNo" />
           <ScalarProperty Name="EmployeeAddress" ColumnName="EmployeeAddress" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="CompanyCompanyId" ColumnName="CompanyCompanyId" />
+          <ScalarProperty Name="SalaryPerHour" ColumnName="SalaryPerHour" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -248,17 +304,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-          <EntitySetMapping Name="Shifts">
-            <EntityTypeMapping TypeName="CompanyData.Shift">
-              <MappingFragment StoreEntitySet="Shifts">
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="workedHours" ColumnName="workedHours" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+    <EntitySetMapping Name="Shifts">
+      <EntityTypeMapping TypeName="IsTypeOf(CompanyData.Shift)">
+        <MappingFragment StoreEntitySet="Shifts">
+          <ScalarProperty Name="ShiftId" ColumnName="ShiftId" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="workedHours" ColumnName="workedHours" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaidShifts">
+      <EntityTypeMapping TypeName="IsTypeOf(CompanyData.PaidShift)">
+        <MappingFragment StoreEntitySet="PaidShifts">
+          <ScalarProperty Name="ShiftPaidId" ColumnName="ShiftPaidId" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="workedHours" ColumnName="workedHours" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

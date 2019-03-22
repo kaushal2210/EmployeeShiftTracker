@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/13/2019 03:13:44
+-- Date Created: 03/22/2019 00:57:50
 -- Generated from EDMX file: C:\Users\Kaushal\source\repos\CompanyCard\CompanyCard\Models\CompanyData.edmx
 -- --------------------------------------------------
 
@@ -23,6 +23,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_Logins_Employees]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Logins] DROP CONSTRAINT [FK_Logins_Employees];
 GO
+IF OBJECT_ID(N'[dbo].[FK_PaidShifts_Employees]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PaidShifts] DROP CONSTRAINT [FK_PaidShifts_Employees];
+GO
 IF OBJECT_ID(N'[dbo].[FK_Shifts_Employees]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Shifts] DROP CONSTRAINT [FK_Shifts_Employees];
 GO
@@ -39,6 +42,9 @@ IF OBJECT_ID(N'[dbo].[Employees]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Logins]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Logins];
+GO
+IF OBJECT_ID(N'[dbo].[PaidShifts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PaidShifts];
 GO
 IF OBJECT_ID(N'[dbo].[Shifts]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Shifts];
@@ -65,7 +71,8 @@ CREATE TABLE [dbo].[Employees] (
     [EmployeePhoneNo] nvarchar(max)  NOT NULL,
     [EmployeeAddress] nvarchar(max)  NOT NULL,
     [Email] nvarchar(max)  NOT NULL,
-    [CompanyCompanyId] int  NOT NULL
+    [CompanyCompanyId] int  NOT NULL,
+    [SalaryPerHour] decimal(19,4)  NOT NULL
 );
 GO
 
@@ -81,6 +88,17 @@ GO
 
 -- Creating table 'Shifts'
 CREATE TABLE [dbo].[Shifts] (
+    [ShiftId] int IDENTITY(1,1) NOT NULL,
+    [StartTime] datetime  NOT NULL,
+    [EndTime] datetime  NOT NULL,
+    [workedHours] float  NOT NULL,
+    [EmployeeId] int  NOT NULL
+);
+GO
+
+-- Creating table 'PaidShifts'
+CREATE TABLE [dbo].[PaidShifts] (
+    [ShiftPaidId] int  NOT NULL,
     [StartTime] datetime  NOT NULL,
     [EndTime] datetime  NOT NULL,
     [workedHours] float  NOT NULL,
@@ -110,10 +128,16 @@ ADD CONSTRAINT [PK_Logins]
     PRIMARY KEY CLUSTERED ([LoginsId] ASC);
 GO
 
--- Creating primary key on [StartTime], [EndTime], [workedHours], [EmployeeId] in table 'Shifts'
+-- Creating primary key on [ShiftId] in table 'Shifts'
 ALTER TABLE [dbo].[Shifts]
 ADD CONSTRAINT [PK_Shifts]
-    PRIMARY KEY CLUSTERED ([StartTime], [EndTime], [workedHours], [EmployeeId] ASC);
+    PRIMARY KEY CLUSTERED ([ShiftId] ASC);
+GO
+
+-- Creating primary key on [ShiftPaidId] in table 'PaidShifts'
+ALTER TABLE [dbo].[PaidShifts]
+ADD CONSTRAINT [PK_PaidShifts]
+    PRIMARY KEY CLUSTERED ([ShiftPaidId] ASC);
 GO
 
 -- --------------------------------------------------
@@ -162,6 +186,21 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_Shifts_Employees'
 CREATE INDEX [IX_FK_Shifts_Employees]
 ON [dbo].[Shifts]
+    ([EmployeeId]);
+GO
+
+-- Creating foreign key on [EmployeeId] in table 'PaidShifts'
+ALTER TABLE [dbo].[PaidShifts]
+ADD CONSTRAINT [FK_PaidShifts_Employees]
+    FOREIGN KEY ([EmployeeId])
+    REFERENCES [dbo].[Employees]
+        ([EmployeeId])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PaidShifts_Employees'
+CREATE INDEX [IX_FK_PaidShifts_Employees]
+ON [dbo].[PaidShifts]
     ([EmployeeId]);
 GO
 

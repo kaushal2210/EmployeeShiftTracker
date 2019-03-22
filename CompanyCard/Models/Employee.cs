@@ -19,6 +19,7 @@ namespace CompanyCard.Models
         {
             this.Logins = new HashSet<Logins>();
             this.Shifts = new HashSet<Shift>();
+            this.PaidShifts = new HashSet<PaidShift>();
         }
     
         public int EmployeeId { get; set; }
@@ -34,5 +35,7 @@ namespace CompanyCard.Models
         public virtual ICollection<Logins> Logins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Shift> Shifts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PaidShift> PaidShifts { get; set; }
     }
 }
