@@ -7,7 +7,7 @@
 <h2>Login Informations</h2>
 
 <p>
-    @Ajax.ActionLink("Create new logins", "Create", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    @Ajax.ActionLink("Create new logins", "Create", null, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </p>
 <table class="table table-hover table-dark">
     <tr>
@@ -35,14 +35,14 @@
             @Html.DisplayFor(modelItem => item.Admin)
         </td>
         <td>
-            @Ajax.ActionLink("Edit", "Edit", new { id=item.LoginsId}, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" }) |
-            @Ajax.ActionLink("Details", "Details", new { id = item.LoginsId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" }) |
-            @Ajax.ActionLink("Delete", "Delete", new { id = item.LoginsId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+            @Ajax.ActionLink("Edit", "Edit", new { id=item.LoginsId}, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" }) |
+            @Ajax.ActionLink("Details", "Details", new { id = item.LoginsId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" }) |
+            @Ajax.ActionLink("Delete", "Delete", new { id = item.LoginsId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
         </td>
     </tr>
 }
 
 </table>
 <div>
-    @Ajax.ActionLink("Back to List", "Index", "Companies", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    @Ajax.ActionLink("Back to List", "Index", "Companies", null, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </div>

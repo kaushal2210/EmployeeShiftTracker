@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Ajax.ActionLink("Create new Shift", "Create", null, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </p>
 <table class="table">
     <tr>
@@ -42,11 +42,11 @@
                         if (Session["Admin"].Equals("Yes"))
                         {
                             <span>
-                                @Ajax.ActionLink("Edit", "Edit", new { id = item.ShiftId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+                                @Ajax.ActionLink("Edit", "Edit", new { id = item.ShiftId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
                                 @* @Html.ActionLink("Edit", "Edit", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })*@
                             </span>
                             <span>
-                                | @Ajax.ActionLink("Delete", "Delete", new { id = item.ShiftId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+                                | @Ajax.ActionLink("Delete", "Delete", new { id = item.ShiftId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
                                 @*@Html.ActionLink("Delete", "Delete", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-sm" })*@
                             </span>
                         }
@@ -76,10 +76,10 @@
 </table>
 
 <span>
-    @Ajax.ActionLink("Back to List", "Index", "Employees", new { id = ViewBag.CompanyID }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    @Ajax.ActionLink("Back to List", "Index", "Employees", new { id = ViewBag.CompanyID }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </span>
 <span>
-    @Ajax.ActionLink("Pay", "Pay", new { id = ViewBag.EmployeeID }, new AjaxOptions { Confirm = "Do you want to pay this employee?", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    @Ajax.ActionLink("Pay", "Pay", new { id = ViewBag.EmployeeID }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", Confirm = "Do you want to pay this employee?", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </span>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

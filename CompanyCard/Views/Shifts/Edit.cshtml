@@ -6,7 +6,7 @@
 
 <h2>Edit</h2>
 
-@using (Ajax.BeginForm("Edit", "Shifts", FormMethod.Post, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace }))
+@using (Ajax.BeginForm("Edit", "Shifts", FormMethod.Post, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace }))
 {
     @Html.AntiForgeryToken()
     
@@ -57,5 +57,5 @@
 }
 
     <div>
-        @Ajax.ActionLink("Back to List", "Index", new { id = Model.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+        @Ajax.ActionLink("Back to List", "Index", new { id = Model.EmployeeId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
     </div>

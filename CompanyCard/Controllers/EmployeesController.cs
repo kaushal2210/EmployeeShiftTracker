@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using CompanyCard.Models;
@@ -17,6 +18,7 @@ namespace CompanyCard.Controllers
         // GET: Employees
         public ActionResult Index(int? id)
         {
+            Thread.Sleep(5000);
             if (Session["username"] != null)
             {
                 if (Request.IsAjaxRequest())

@@ -68,7 +68,7 @@
     {
         if (Session["Admin"].Equals("Yes"))
         {
-            @Ajax.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+            @Ajax.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
         }
-    }|@Ajax.ActionLink("Back to List", "Index", new { id = Model.Company.CompanyId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    }|@Ajax.ActionLink("Back to List", "Index", new { id = Model.Company.CompanyId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </div>

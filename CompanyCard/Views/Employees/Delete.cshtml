@@ -61,13 +61,13 @@
 
     </dl>
 
-    @using (Ajax.BeginForm("Delete", "Employees", FormMethod.Post, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace }))
+    @using (Ajax.BeginForm("Delete", "Employees", FormMethod.Post, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace }))
     {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Ajax.ActionLink("Back to List", "Index", new { id = Model.Company.CompanyId }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+            @Ajax.ActionLink("Back to List", "Index", new { id = Model.Company.CompanyId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
         </div>
     }
 </div>

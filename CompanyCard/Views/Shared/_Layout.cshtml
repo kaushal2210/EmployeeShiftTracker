@@ -9,6 +9,7 @@
     <link href="~/CSS/StyleSheet.css" rel="stylesheet" />
     <link href="~/CSS/loginStyleSheet.css" rel="stylesheet" />
     <script src="~/Scripts/StopWatch.js"></script>
+    <script src="~/Scripts/Loading.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -19,7 +20,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Ajax.ActionLink("Employee Information App", "Index", "Companies", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand" })
+                <span class="icon-bar"><img src="~/Image/loading.gif" id="loadingImage" alt="Loading Image" title="Loding Image" style="display:none;height:50px"></span>
+                @Ajax.ActionLink("Employee Information App", "Index", "Companies", null, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand" })
             </div>
             @if (Session["username"] != null)
             {
@@ -27,21 +29,22 @@
                     <ul class="nav navbar-nav">
                         @if (Session["Admin"].Equals("Yes"))
                         {
-                            <li>@Ajax.ActionLink("Login Information", "Index", "Logins", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" })</li>
+                            <li>@Ajax.ActionLink("Login Information", "Index", "Logins", null, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" })</li>
                         }
-                        <li>@Ajax.ActionLink("Timesheet", "Index", "Shifts", new { id = Session["EmployeeId"] }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" })</li>
+                        <li>@Ajax.ActionLink("Timesheet", "Index", "Shifts", new { id = Session["EmployeeId"] }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" })</li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li>@Ajax.ActionLink("Start the Shift", "Start", "Shifts", null, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand", @id = "Start", @onclick = "startFunction()" })</li>
-                        <li>@Ajax.ActionLink("End the Shift", "End", "Shifts", new { id = Session["EmployeeId"] }, new AjaxOptions { Confirm = "Do you really want to end your shift?", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand", @id = "End", @onclick = "endFunction()", @style = "display:none"})</li>
+                        <li>@Ajax.ActionLink("Start the Shift", "Start", "Shifts", null, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand", @id = "Start", @onclick = "startFunction()" })</li>
+                        <li>@Ajax.ActionLink("End the Shift", "End", "Shifts", new { id = Session["EmployeeId"] }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", Confirm = "Do you really want to end your shift?", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand", @id = "End", @onclick = "endFunction()", @style = "display:none" })</li>
                         @*<li><a id ="End" onclick="endFunction()" style="display:none">End of Shift</a></li>*@
-                        <li>@Ajax.ActionLink(Session["username"].ToString(), "Edit", "Logins", new { id = Session["loginid"] }, new AjaxOptions { UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" })</li>
+                        <li>@Ajax.ActionLink(Session["username"].ToString(), "Edit", "Logins", new { id = Session["loginid"] }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" })</li>
                         <li>@Html.ActionLink("Log Out", "logout", "Logins")</li>
                     </ul>
                 </div>
             }
         </div>
     </div>
+    
     <div class="navbar box navbar-right" id="timeContainer">
         <h1 id="timeLabel"></h1>
     </div>
