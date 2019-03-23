@@ -128,6 +128,7 @@ namespace CompanyCard.Controllers
 
                     if (Session["Admin"].Equals("Yes"))
                     {
+                        ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName");
                         return PartialView();
                     }
                     else
@@ -152,7 +153,7 @@ namespace CompanyCard.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LoginsId,UserName,Password,Admin")] Logins logins)
+        public ActionResult Create([Bind(Include = "LoginsId,UserName,Password,Admin,EmployeeId")] Logins logins)
         {
             if (Request.IsAjaxRequest())
             {
@@ -167,6 +168,8 @@ namespace CompanyCard.Controllers
                             db.SaveChanges();
                             return RedirectToAction("Index");
                         }
+
+                        ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", logins.EmployeeId);
                         return PartialView("Create", logins);
                     }
                     else
@@ -205,6 +208,7 @@ namespace CompanyCard.Controllers
                         {
                             return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
                         }
+                        ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", logins.EmployeeId);
                         return PartialView("Edit", logins);
                     }
                     else
@@ -229,7 +233,7 @@ namespace CompanyCard.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LoginsId,UserName,Password,Admin")] Logins logins)
+        public ActionResult Edit([Bind(Include = "LoginsId,UserName,Password,Admin,EmployeeId")] Logins logins)
         {
             if (Request.IsAjaxRequest())
             {
@@ -244,6 +248,7 @@ namespace CompanyCard.Controllers
                             db.SaveChanges();
                             return RedirectToAction("Index");
                         }
+                        ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", logins.EmployeeId);
                         return PartialView("Edit", logins);
                     }
                     else

@@ -25,7 +25,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            
+
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.StartTime)
@@ -56,30 +56,33 @@
         }
     </tbody>
 </table>
-    <table class=" bottom table table-striped">
-        <tr>
-            <td>Employee:</td>
-            <td>@ViewBag.EmployeeName</td>
-        </tr>
-        <tr>
-            <td>Total worked hours:</td>
-            <td>@Model.Sum(i => i.workedHours)</td>
-        </tr>
-        <tr>
-            <td>How many Days worked:</td>
-            <td>@Model.Count()</td>
-        </tr>
-        <tr>
-            <td>Salary:</td>
-            <td>@ViewBag.Salary</td>
-        </tr>
-    </table>
-    <span>
-        @Ajax.ActionLink("Back to List", "Index", "Employees", new { id = ViewBag.CompanyID }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
-    </span>
+<table class=" bottom table table-striped">
+    <tr>
+        <td>Employee:</td>
+        <td>@ViewBag.EmployeeName</td>
+    </tr>
+    <tr>
+        <td>Total worked hours:</td>
+        <td>@Model.Sum(i => i.workedHours)</td>
+    </tr>
+    <tr>
+        <td>How many Days worked:</td>
+        <td>@Model.Count()</td>
+    </tr>
+    <tr>
+        <td>Salary:</td>
+        <td>@ViewBag.Salary</td>
+    </tr>
+</table>
+<span>
+    @Ajax.ActionLink("Back to List", "Index", "Employees", new { id = ViewBag.CompanyID }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+</span>
+@if (Session["Admin"].Equals("Yes"))
+{
     <span>
         @Ajax.ActionLink("Pay", "Pay", new { id = ViewBag.EmployeeID }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", Confirm = "Do you want to pay this employee?", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
     </span>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

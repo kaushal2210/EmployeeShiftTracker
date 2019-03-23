@@ -290,12 +290,6 @@
     <Content Include="Views\Employees\Edit.cshtml" />
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Shared\ErrorLogin.cshtml" />
-    <Content Include="Views\Logins\loginPage.cshtml" />
-    <Content Include="Views\Logins\Create.cshtml" />
-    <Content Include="Views\Logins\Delete.cshtml" />
-    <Content Include="Views\Logins\Details.cshtml" />
-    <Content Include="Views\Logins\Edit.cshtml" />
-    <Content Include="Views\Logins\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -312,6 +306,12 @@
     <Content Include="Views\Shifts\Index.cshtml" />
     <Content Include="Views\Shifts\PaidIndex.cshtml" />
     <Content Include="Views\Shared\Error404.cshtml" />
+    <Content Include="Views\Logins\Create.cshtml" />
+    <Content Include="Views\Logins\Delete.cshtml" />
+    <Content Include="Views\Logins\Details.cshtml" />
+    <Content Include="Views\Logins\Edit.cshtml" />
+    <Content Include="Views\Logins\Index.cshtml" />
+    <Content Include="Views\Logins\loginPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
