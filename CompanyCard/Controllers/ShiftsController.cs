@@ -73,11 +73,9 @@ namespace CompanyCard.Controllers
                     ViewBag.EmployeeName = employee.EmployeeName;
                     ViewBag.Salary = employee.SalaryPerHour;
                     ViewBag.CompanyID = employee.CompanyCompanyId;
-                    var shiftTemp = from a in db.PaidShifts.ToList()
-                                    where a.EmployeeId == employee.EmployeeId
-                                    select a;
-                    return PartialView(shiftTemp);
 
+                    var shiftTemp = db.PaidShifts.Where(x => x.EmployeeId == employee.EmployeeId).GroupBy(x => x.Month_Year).Select(x => x.FirstOrDefault());
+                    return PartialView(shiftTemp);
                 }
                 else
                 {
@@ -91,6 +89,43 @@ namespace CompanyCard.Controllers
 
         }
 
+        public ActionResult PaidShiftInsideMonth(int? id, String month)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                if (Session["username"] != null)
+                {
+
+                    if (id == null)
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "You must have valid employeeid to see the data." });
+                    }
+                    Employee employee = db.Employees.Find(id);
+                    if (employee == null)
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "Company not found." });
+                    }
+                    ViewBag.EmployeeID = employee.EmployeeId;
+                    ViewBag.EmployeeName = employee.EmployeeName;
+                    ViewBag.Salary = employee.SalaryPerHour;
+                    ViewBag.CompanyID = employee.CompanyCompanyId;
+                    ViewBag.Month = month;
+                    var shiftTemp = from a in db.PaidShifts.ToList()
+                                    where a.EmployeeId == employee.EmployeeId && a.Month_Year.Equals(month)
+                                    select a;
+                    return PartialView(shiftTemp);
+                }
+                else
+                {
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                }
+            }
+            else
+            {
+                return View("Error404");
+            }
+
+        }
 
 
         // GET: Shifts/Details/5
@@ -423,7 +458,8 @@ namespace CompanyCard.Controllers
                                          select x;
                         foreach (Shift temp in deleteList)
                         {
-                            db.PaidShifts.Add(new PaidShift { StartTime = temp.StartTime, EndTime = temp.EndTime, workedHours = temp.workedHours, EmployeeId = temp.EmployeeId });
+                            String month_year = temp.StartTime.ToString("MMMM") + " " + temp.StartTime.Year;
+                            db.PaidShifts.Add(new PaidShift { StartTime = temp.StartTime, EndTime = temp.EndTime, workedHours = temp.workedHours, Month_Year = month_year ,EmployeeId = temp.EmployeeId });
                             db.Shifts.Remove(temp);
                         }
                         db.SaveChanges();

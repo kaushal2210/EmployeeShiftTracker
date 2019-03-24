@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/22/2019 00:57:50
+-- Date Created: 03/24/2019 14:37:41
 -- Generated from EDMX file: C:\Users\Kaushal\source\repos\CompanyCard\CompanyCard\Models\CompanyData.edmx
 -- --------------------------------------------------
 
@@ -23,11 +23,11 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_Logins_Employees]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Logins] DROP CONSTRAINT [FK_Logins_Employees];
 GO
-IF OBJECT_ID(N'[dbo].[FK_PaidShifts_Employees]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[PaidShifts] DROP CONSTRAINT [FK_PaidShifts_Employees];
-GO
 IF OBJECT_ID(N'[dbo].[FK_Shifts_Employees]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Shifts] DROP CONSTRAINT [FK_Shifts_Employees];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PaidShifts_Employees]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PaidShifts] DROP CONSTRAINT [FK_PaidShifts_Employees];
 GO
 
 -- --------------------------------------------------
@@ -43,11 +43,11 @@ GO
 IF OBJECT_ID(N'[dbo].[Logins]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Logins];
 GO
-IF OBJECT_ID(N'[dbo].[PaidShifts]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[PaidShifts];
-GO
 IF OBJECT_ID(N'[dbo].[Shifts]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Shifts];
+GO
+IF OBJECT_ID(N'[dbo].[PaidShifts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PaidShifts];
 GO
 
 -- --------------------------------------------------
@@ -98,11 +98,12 @@ GO
 
 -- Creating table 'PaidShifts'
 CREATE TABLE [dbo].[PaidShifts] (
-    [ShiftPaidId] int  NOT NULL,
+    [ShiftPaidId] int IDENTITY(1,1) NOT NULL,
     [StartTime] datetime  NOT NULL,
     [EndTime] datetime  NOT NULL,
     [workedHours] float  NOT NULL,
-    [EmployeeId] int  NOT NULL
+    [EmployeeId] int  NOT NULL,
+    [Month_Year] nvarchar(50)  NOT NULL
 );
 GO
 

@@ -19,6 +19,7 @@ namespace CompanyCard.Models
         public System.DateTime EndTime { get; set; }
         public double workedHours { get; set; }
         public int EmployeeId { get; set; }
+        public string Month_Year { get; set; }
     
         public virtual Employee Employee { get; set; }
     }

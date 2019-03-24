@@ -9,13 +9,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.workedHours)
+            @Html.DisplayNameFor(model => model.Month_Year)
         </th>
         <th></th>
     </tr>
@@ -24,13 +18,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StartTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.workedHours)
+                    @Ajax.ActionLink(item.Month_Year.ToString(), "PaidShiftInsideMonth", "Shifts", new { id = ViewBag.EmployeeId, month = item.Month_Year }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" })
                 </td>
             </tr>
         }
@@ -40,11 +28,7 @@
     <tr>
         <td>Employee:</td>
         <td>@ViewBag.EmployeeName</td>
-    </tr>
-    <tr>
-        <td>Total worked hours:</td>
-        <td>@Model.Sum(i => i.workedHours)</td>
-    </tr>
+    </tr> 
     <tr>
         <td>How many Days worked:</td>
         <td>@Model.Count()</td>

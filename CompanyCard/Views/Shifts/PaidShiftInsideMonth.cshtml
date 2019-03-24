@@ -1,0 +1,61 @@
+﻿@model IEnumerable<CompanyCard.Models.PaidShift>
+
+@{
+    ViewBag.Title = "PaidShiftInsideMonth";
+}
+
+<h2>Paid shift of @ViewBag.Month</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.workedHours)
+        </th>
+        <th></th>
+    </tr>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.workedHours)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<table class=" bottom table table-striped">
+    <tr>
+        <td>Employee:</td>
+        <td>@ViewBag.EmployeeName</td>
+    </tr>
+    <tr>
+        <td>How many Days worked:</td>
+        <td>@Model.Count()</td>
+    </tr>
+    <tr>
+        <td>Total worked hours:</td>
+        <td>@Model.Sum(i => i.workedHours)</td>
+    </tr>
+    <tr>
+        <td>Salary:</td>
+        <td>@ViewBag.Salary</td>
+    </tr>
+</table>
+<span>
+    @Ajax.ActionLink("Back to List", "PaidIndex", "Shifts", new { id = ViewBag.EmployeeId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+</span>
+
