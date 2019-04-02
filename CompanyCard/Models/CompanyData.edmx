@@ -4,132 +4,160 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CompanyData.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="CompanyDataStoreContainer">
-    <EntitySet Name="Companies" EntityType="CompanyData.Store.Companies" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Employees" EntityType="CompanyData.Store.Employees" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Logins" EntityType="CompanyData.Store.Logins" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Shifts" EntityType="CompanyData.Store.Shifts" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PaidShifts" EntityType="CompanyData.Store.PaidShifts" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="CompanyEmployee" Association="CompanyData.Store.CompanyEmployee">
-      <End Role="Company" EntitySet="Companies" />
-      <End Role="Employee" EntitySet="Employees" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Logins_Employees" Association="CompanyData.Store.FK_Logins_Employees">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="Logins" EntitySet="Logins" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Shifts_Employees" Association="CompanyData.Store.FK_Shifts_Employees">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="Shift" EntitySet="Shifts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PaidShifts_Employees" Association="CompanyData.Store.FK_PaidShifts_Employees">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="PaidShift" EntitySet="PaidShifts" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Companies">
-    <Key>
-      <PropertyRef Name="CompanyId" />
-    </Key>
-    <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CompanyName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CompanyAddress" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ContactNo" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Website" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Employees">
-    <Key>
-      <PropertyRef Name="EmployeeId" />
-    </Key>
-    <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="EmployeeName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EmployeePhoneNo" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EmployeeAddress" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CompanyCompanyId" Type="int" Nullable="false" />
-    <Property Name="SalaryPerHour" Type="decimal" Nullable="false" Precision="19" Scale="4" />
-  </EntityType>
-  <EntityType Name="Logins">
-    <Key>
-      <PropertyRef Name="LoginsId" />
-    </Key>
-    <Property Name="LoginsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Admin" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EmployeeId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Shifts">
-    <Key>
-      <PropertyRef Name="ShiftId" />
-    </Key>
-    <Property Name="ShiftId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="StartTime" Type="datetime" Nullable="false" />
-    <Property Name="EndTime" Type="datetime" Nullable="false" />
-    <Property Name="workedHours" Type="float" Nullable="false" />
-    <Property Name="EmployeeId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="PaidShifts">
-    <Key>
-      <PropertyRef Name="ShiftPaidId" />
-    </Key>
-    <Property Name="ShiftPaidId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="StartTime" Type="datetime" Nullable="false" />
-    <Property Name="EndTime" Type="datetime" Nullable="false" />
-    <Property Name="workedHours" Type="float" Nullable="false" />
-    <Property Name="EmployeeId" Type="int" Nullable="false" />
-    <Property Name="Month_Year" Type="nvarchar" Nullable="false" MaxLength="50" />
-  </EntityType>
-  <Association Name="CompanyEmployee">
-    <End Role="Company" Type="CompanyData.Store.Companies" Multiplicity="1" />
-    <End Role="Employee" Type="CompanyData.Store.Employees" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Company">
-        <PropertyRef Name="CompanyId" />
-      </Principal>
-      <Dependent Role="Employee">
-        <PropertyRef Name="CompanyCompanyId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Logins_Employees">
-    <End Role="Employee" Type="CompanyData.Store.Employees" Multiplicity="1" />
-    <End Role="Logins" Type="CompanyData.Store.Logins" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee">
-        <PropertyRef Name="EmployeeId" />
-      </Principal>
-      <Dependent Role="Logins">
-        <PropertyRef Name="EmployeeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Shifts_Employees">
-    <End Role="Employee" Type="CompanyData.Store.Employees" Multiplicity="1" />
-    <End Role="Shift" Type="CompanyData.Store.Shifts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee">
-        <PropertyRef Name="EmployeeId" />
-      </Principal>
-      <Dependent Role="Shift">
-        <PropertyRef Name="EmployeeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PaidShifts_Employees">
-    <End Role="Employee" Type="CompanyData.Store.Employees" Multiplicity="1" />
-    <End Role="PaidShift" Type="CompanyData.Store.PaidShifts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee">
-        <PropertyRef Name="EmployeeId" />
-      </Principal>
-      <Dependent Role="PaidShift">
-        <PropertyRef Name="EmployeeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
+    <Schema Namespace="CompanyData.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Companies">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CompanyAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ContactNo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Website" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EmployeePhoneNo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EmployeeAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SalaryPerHour" Type="money" Nullable="false" />
+          <Property Name="CompanyCompanyId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logins">
+          <Key>
+            <PropertyRef Name="LoginsId" />
+          </Key>
+          <Property Name="LoginsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Admin" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaidShifts">
+          <Key>
+            <PropertyRef Name="ShiftPaidId" />
+          </Key>
+          <Property Name="ShiftPaidId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="workedHours" Type="float" Nullable="false" />
+          <Property Name="Month_Year" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PreviousEmployee">
+          <Key>
+            <PropertyRef Name="PreviousEmployeeId" />
+          </Key>
+          <Property Name="PreviousEmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EmployeePhoneNo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EmployeeAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CompanyCompanyId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shifts">
+          <Key>
+            <PropertyRef Name="ShiftId" />
+          </Key>
+          <Property Name="ShiftId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="workedHours" Type="float" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CompanyEmployee">
+          <End Role="Companies" Type="Self.Companies" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="CompanyCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logins_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Logins" Type="Self.Logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Logins">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaidShifts_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="PaidShifts" Type="Self.PaidShifts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="PaidShifts">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PreviousEmployee_Companies">
+          <End Role="Companies" Type="Self.Companies" Multiplicity="1" />
+          <End Role="PreviousEmployee" Type="Self.PreviousEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="PreviousEmployee">
+              <PropertyRef Name="CompanyCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shifts_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Shifts" Type="Self.Shifts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Shifts">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CompanyDataStoreContainer">
+          <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logins" EntityType="Self.Logins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaidShifts" EntityType="Self.PaidShifts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PreviousEmployee" EntityType="Self.PreviousEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shifts" EntityType="Self.Shifts" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CompanyEmployee" Association="Self.FK_CompanyEmployee">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logins_Employees" Association="Self.FK_Logins_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Logins" EntitySet="Logins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaidShifts_Employees" Association="Self.FK_PaidShifts_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="PaidShifts" EntitySet="PaidShifts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PreviousEmployee_Companies" Association="Self.FK_PreviousEmployee_Companies">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="PreviousEmployee" EntitySet="PreviousEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shifts_Employees" Association="Self.FK_Shifts_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Shifts" EntitySet="Shifts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CompanyData" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -155,6 +183,11 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="PaidShift" EntitySet="PaidShifts" />
           </AssociationSet>
+          <EntitySet Name="PreviousEmployees" EntityType="CompanyData.PreviousEmployee" />
+          <AssociationSet Name="FK_PreviousEmployee_Companies" Association="CompanyData.FK_PreviousEmployee_Companies">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="PreviousEmployee" EntitySet="PreviousEmployees" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -166,6 +199,7 @@
           <Property Name="ContactNo" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="Website" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Employees" Relationship="CompanyData.CompanyEmployee" FromRole="Company" ToRole="Employee" />
+          <NavigationProperty Name="PreviousEmployees" Relationship="CompanyData.FK_PreviousEmployee_Companies" FromRole="Company" ToRole="PreviousEmployee" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -265,6 +299,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PreviousEmployee">
+          <Key>
+            <PropertyRef Name="PreviousEmployeeId" />
+          </Key>
+          <Property Name="PreviousEmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeePhoneNo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyCompanyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="CompanyData.FK_PreviousEmployee_Companies" FromRole="PreviousEmployee" ToRole="Company" />
+        </EntityType>
+        <Association Name="FK_PreviousEmployee_Companies">
+          <End Type="CompanyData.Company" Role="Company" Multiplicity="1" />
+          <End Type="CompanyData.PreviousEmployee" Role="PreviousEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="PreviousEmployee">
+              <PropertyRef Name="CompanyCompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -329,6 +387,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+          <EntitySetMapping Name="PreviousEmployees">
+            <EntityTypeMapping TypeName="CompanyData.PreviousEmployee">
+              <MappingFragment StoreEntitySet="PreviousEmployee">
+                <ScalarProperty Name="CompanyCompanyId" ColumnName="CompanyCompanyId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmployeeAddress" ColumnName="EmployeeAddress" />
+                <ScalarProperty Name="EmployeePhoneNo" ColumnName="EmployeePhoneNo" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="PreviousEmployeeId" ColumnName="PreviousEmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

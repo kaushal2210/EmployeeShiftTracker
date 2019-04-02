@@ -5,6 +5,16 @@
 
     ViewBag.Title = "login";
 }
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+    ViewBag.Message = null;
+}
+
 
 @using (Html.BeginForm("Authorize", "Logins", FormMethod.Post))
 {

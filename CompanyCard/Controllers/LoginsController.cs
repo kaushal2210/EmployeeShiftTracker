@@ -67,7 +67,8 @@ namespace CompanyCard.Controllers
 
             if (user == null)
             {
-                return View("ErrorLogin", new ErrorViewModel { Description = "Your user name or password is wrong, try again!!." });
+                ViewBag.Message = "Your user name or password is wrong, try again!!.";
+                return View("loginPage");
             }
             else
             {

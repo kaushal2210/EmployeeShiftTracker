@@ -3,6 +3,17 @@
 @{
     ViewBag.Title = "Index";
 }
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+    ViewBag.Message = null;
+}
+
+
 
 <h2>Index</h2>
 

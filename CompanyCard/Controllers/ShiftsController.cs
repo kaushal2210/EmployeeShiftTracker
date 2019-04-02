@@ -147,7 +147,7 @@ namespace CompanyCard.Controllers
                         {
                             return PartialView("Error", new ErrorViewModel { Description = "Shift not found." });
                         }
-                        return View(shift);
+                        return PartialView(shift);
                     }
                     else
                     {
@@ -177,7 +177,7 @@ namespace CompanyCard.Controllers
                     if (Session["Admin"].Equals("Yes"))
                     {
                         ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName");
-                        return View();
+                        return PartialView();
                     }
                     else
                     {
@@ -201,7 +201,7 @@ namespace CompanyCard.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ShiftId,StartTime,EndTime,workedHours,EmployeeId")] Shift shift)
+        public ActionResult Create([Bind(Include = "ShiftId,StartTime,EndTime,EmployeeId")] Shift shift)
         {
             if (Request.IsAjaxRequest())
             {
@@ -210,15 +210,16 @@ namespace CompanyCard.Controllers
 
                     if (Session["Admin"].Equals("Yes"))
                     {
+                        shift.workedHours = Math.Round(shift.EndTime.Subtract(shift.StartTime).TotalHours, 2);
                         if (ModelState.IsValid)
                         {
                             db.Shifts.Add(shift);
                             db.SaveChanges();
-                            return RedirectToAction("Index");
+                            return RedirectToAction("Index",new { shift.EmployeeId});
                         }
 
                         ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);
-                        return View(shift);
+                        return PartialView(shift);
                     }
                     else
                     {
@@ -257,7 +258,7 @@ namespace CompanyCard.Controllers
                             return PartialView("Error", new ErrorViewModel { Description = "Shift not found." });
                         }
                         ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);
-                        return View(shift);
+                        return PartialView(shift);
                     }
                     else
                     {
@@ -281,7 +282,7 @@ namespace CompanyCard.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ShiftId,StartTime,EndTime,workedHours,EmployeeId")] Shift shift)
+        public ActionResult Edit([Bind(Include = "ShiftId,StartTime,EndTime,EmployeeId")] Shift shift)
         {
             if (Request.IsAjaxRequest())
             {
@@ -290,14 +291,15 @@ namespace CompanyCard.Controllers
 
                     if (Session["Admin"].Equals("Yes"))
                     {
+                        shift.workedHours = Math.Round(shift.EndTime.Subtract(shift.StartTime).TotalHours, 2);
                         if (ModelState.IsValid)
                         {
                             db.Entry(shift).State = EntityState.Modified;
                             db.SaveChanges();
-                            return RedirectToAction("Index");
+                            return RedirectToAction("Index", new { id = shift.EmployeeId});
                         }
                         ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);
-                        return View(shift);
+                        return PartialView(shift);
                     }
                     else
                     {
@@ -369,7 +371,7 @@ namespace CompanyCard.Controllers
                         Shift shift = db.Shifts.Find(id);
                         db.Shifts.Remove(shift);
                         db.SaveChanges();
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index",new { id = shift.EmployeeId});
                     }
                     else
                     {
@@ -463,7 +465,7 @@ namespace CompanyCard.Controllers
                             db.Shifts.Remove(temp);
                         }
                         db.SaveChanges();
-                        return RedirectToAction("Index", "Shifts", new { id = tempId });
+                        return RedirectToAction("Index", "Shifts", new { id = id });
                     }
                     else
                     {

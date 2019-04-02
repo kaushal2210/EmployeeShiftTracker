@@ -14,6 +14,8 @@
         <AssociationConnector Association="CompanyData.FK_Shifts_Employees" />
         <EntityTypeShape EntityType="CompanyData.PaidShift" Width="1.5" PointX="0.75" PointY="4.75" />
         <AssociationConnector Association="CompanyData.FK_PaidShifts_Employees" />
+        <EntityTypeShape EntityType="CompanyData.PreviousEmployee" Width="1.5" PointX="3.75" PointY="3.625" />
+        <AssociationConnector Association="CompanyData.FK_PreviousEmployee_Companies" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

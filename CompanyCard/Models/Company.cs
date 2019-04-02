@@ -18,6 +18,7 @@ namespace CompanyCard.Models
         public Company()
         {
             this.Employees = new HashSet<Employee>();
+            this.PreviousEmployees = new HashSet<PreviousEmployee>();
         }
     
         public int CompanyId { get; set; }
@@ -28,5 +29,7 @@ namespace CompanyCard.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PreviousEmployee> PreviousEmployees { get; set; }
     }
 }

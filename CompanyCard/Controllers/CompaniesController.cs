@@ -195,7 +195,7 @@ namespace CompanyCard.Controllers
                         Company company = db.Companies.Find(id);
                         if (company == null)
                         {
-                            return View("Error", new ErrorViewModel { Description = "Company not found." });
+                            return PartialView("Error", new ErrorViewModel { Description = "Company not found." });
                         }
                         return PartialView("Delete", company);
                     }
@@ -228,10 +228,54 @@ namespace CompanyCard.Controllers
 
                     if (Session["Admin"].Equals("Yes"))
                     {
-                        Company company = db.Companies.Find(id);
-                        db.Companies.Remove(company);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        var companyEmployeeShift = from x in db.Shifts
+                                                   where x.Employee.CompanyCompanyId == id
+                                                   select x;
+                        if (!companyEmployeeShift.Any())
+                        {
+                            //Delete previous employee data of the company
+                            var deletePreviousEmployeeList = from x in db.PreviousEmployees
+                                                             where x.CompanyCompanyId == id
+                                                             select x;
+
+                            foreach (PreviousEmployee temp in deletePreviousEmployeeList)
+                            {
+                                db.PreviousEmployees.Remove(temp);
+                            }
+
+                            //Delete PaidShifts data of the company's employees
+                            var deletePaidShiftsOfCompanyEmployees = from x in db.PaidShifts
+                                                                     where x.Employee.CompanyCompanyId == id
+                                                                     select x;
+
+                            foreach (PaidShift temp in deletePaidShiftsOfCompanyEmployees)
+                            {
+                                db.PaidShifts.Remove(temp);
+                            }
+
+
+                            //Delete current Employee data of the company
+                            var deleteEmployeeList = from x in db.Employees
+                                                     where x.CompanyCompanyId == id
+                                                     select x;
+
+                            foreach (Employee temp in deleteEmployeeList)
+                            {
+                                db.Employees.Remove(temp);
+                            }
+
+
+                            Company company = db.Companies.Find(id);
+                            db.Companies.Remove(company);
+                            db.SaveChanges();
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            ViewBag.Message = "You must pay all your employee's unpaid hours before close the comapany.";
+                            return RedirectToAction("Index");
+                        }
+
                     }
                     else
                     {

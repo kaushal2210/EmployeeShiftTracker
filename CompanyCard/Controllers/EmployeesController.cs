@@ -18,7 +18,7 @@ namespace CompanyCard.Controllers
         // GET: Employees
         public ActionResult Index(int? id)
         {
-            Thread.Sleep(5000);
+            Session["CompanyId"] = id;
             if (Request.IsAjaxRequest())
             {
                 if (Session["username"] != null)
@@ -34,6 +34,7 @@ namespace CompanyCard.Controllers
                         return PartialView("Error", new ErrorViewModel { Description = "Company not found." });
                     }
                     ViewBag.CompanyName = company.CompanyName;
+                    ViewBag.CompanyId = company.CompanyId;
                     var empTemp = from a in db.Employees.ToList()
                                   where a.CompanyCompanyId == company.CompanyId
                                   select a;
@@ -130,7 +131,7 @@ namespace CompanyCard.Controllers
                         {
                             db.Employees.Add(employee);
                             db.SaveChanges();
-                            return RedirectToAction("Index");
+                            return RedirectToAction("Index" , new { id = employee.CompanyCompanyId });
                         }
 
                         ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
@@ -210,7 +211,7 @@ namespace CompanyCard.Controllers
                         {
                             db.Entry(employee).State = EntityState.Modified;
                             db.SaveChanges();
-                            return RedirectToAction("Index");
+                            return RedirectToAction("Index",new { id = employee.CompanyCompanyId });
                         }
                         ViewBag.CompanyCompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyCompanyId);
                         return PartialView("Edit", employee);
@@ -282,10 +283,36 @@ namespace CompanyCard.Controllers
 
                     if (Session["Admin"].Equals("Yes"))
                     {
-                        Employee employee = db.Employees.Find(id);
-                        db.Employees.Remove(employee);
-                        db.SaveChanges();
-                        return RedirectToAction("Index");
+                        var shiftTemp = from a in db.Shifts.ToList()
+                                        where a.EmployeeId == id
+                                        select a;
+                        if (!shiftTemp.Any())
+                        {
+                            var deleteList = from x in db.PaidShifts
+                                             where x.EmployeeId == id
+                                             select x;
+                            foreach (PaidShift temp in deleteList)
+                            { 
+                                db.PaidShifts.Remove(temp);
+                            }
+                            var login = from x in db.Logins
+                                        where x.EmployeeId == id
+                                        select x;
+                            foreach (Logins temp in login)
+                            {
+                                db.Logins.Remove(temp);
+                            }
+                            Employee employee = db.Employees.Find(id);
+                            db.PreviousEmployees.Add(new PreviousEmployee{ EmployeeName = employee.EmployeeName, EmployeePhoneNo = employee.EmployeePhoneNo, EmployeeAddress = employee.EmployeeAddress, Email = employee.Email, CompanyCompanyId = employee.CompanyCompanyId });
+                            db.Employees.Remove(employee);
+                            db.SaveChanges();
+                            return RedirectToAction("Index", new { id = employee.CompanyCompanyId });
+                        }
+                        else
+                        {
+                            ViewBag.Message = "You must pay employee's unpaid hours before delete.";
+                            return RedirectToAction("Index", "Shifts", new { id = id });
+                        }
                     }
                     else
                     {

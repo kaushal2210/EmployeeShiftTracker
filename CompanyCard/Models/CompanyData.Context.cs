@@ -30,5 +30,6 @@ namespace CompanyCard.Models
         public virtual DbSet<Logins> Logins { get; set; }
         public virtual DbSet<Shift> Shifts { get; set; }
         public virtual DbSet<PaidShift> PaidShifts { get; set; }
+        public virtual DbSet<PreviousEmployee> PreviousEmployees { get; set; }
     }
 }

@@ -3,6 +3,15 @@
 @{
     ViewBag.Title = "Home";
 }
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+    ViewBag.Message = null;
+}
 
 <h2>Company List</h2>
 
@@ -42,7 +51,7 @@
                 @Html.DisplayFor(modelItem => item.Website)
             </td>
             <td>
-                @Ajax.ActionLink("Select", "Index", "Employees",new { id = item.CompanyId }, new AjaxOptions {LoadingElementId = "loadingImage",OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+                @Ajax.ActionLink("Select", "Index", "Employees", new { id = item.CompanyId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
                 @if (Session["Admin"] != null)
                 {
                     if (Session["Admin"].Equals("Yes"))
