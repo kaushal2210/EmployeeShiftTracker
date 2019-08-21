@@ -310,7 +310,6 @@ namespace CompanyCard.Controllers
                         }
                         else
                         {
-                            ViewBag.Message = "You must pay employee's unpaid hours before delete.";
                             return RedirectToAction("Index", "Shifts", new { id = id });
                         }
                     }
@@ -322,7 +321,7 @@ namespace CompanyCard.Controllers
                 }
                 else
                 {
-                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });                 
                 }
             }
             else

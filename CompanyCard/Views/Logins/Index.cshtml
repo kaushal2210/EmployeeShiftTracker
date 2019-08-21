@@ -43,7 +43,8 @@
             </td>
             <td>
                 @Ajax.ActionLink("Edit", "Edit", new { id = item.LoginsId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" }) |
-                @Ajax.ActionLink("Delete", "Delete", new { id = item.LoginsId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+                @Ajax.ActionLink("Delete", "Delete", new { id = item.LoginsId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" }) |
+                @Ajax.ActionLink("Reset Password", "ResetPassword", new { id = item.LoginsId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }, new { @class = "btn btn-primary btn-sm" })
             </td>
         </tr>
     }

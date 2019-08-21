@@ -8,6 +8,8 @@
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/CSS/StyleSheet.css" rel="stylesheet" />
     <link href="~/CSS/loginStyleSheet.css" rel="stylesheet" />
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+    <link href="~/CSS/formStyleSheet.css" rel="stylesheet" />
     <script src="~/Scripts/StopWatch.js"></script>
     <script src="~/Scripts/Loading.js"></script>
 </head>
@@ -27,7 +29,7 @@
                 }
                 else
                 {
-                    @Ajax.ActionLink("Employee Information App", "loginPage", "Logins", null, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand" })
+                    @Ajax.ActionLink("Employee Information App", "LoginPage", "Logins", null, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand" })
                 }
             </div>
             @if (Session["username"] != null)
@@ -45,7 +47,7 @@
                         <li>@Ajax.ActionLink("End the Shift", "End", "Shifts", new { id = Session["EmployeeId"] }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", Confirm = "Do you really want to end your shift?", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "navbar-brand", @id = "End", @onclick = "endFunction()", @style = "display:none" })</li>
                         @*<li><a id ="End" onclick="endFunction()" style="display:none">End of Shift</a></li>*@
                         <li>@Ajax.ActionLink(Session["username"].ToString(), "Edit", "Logins", new { id = Session["loginid"] }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" })</li>
-                        <li>@Html.ActionLink("Log Out", "logout", "Logins")</li>
+                        <li>@Html.ActionLink("Log Out", "Logout", "Logins")</li>
                     </ul>
                 </div>
             }

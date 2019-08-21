@@ -18,7 +18,7 @@
 <p>
     @Ajax.ActionLink("Add new company", "Create", null, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </p>
-<table class="table table-hover table-dark">
+<table class="table table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.CompanyName)

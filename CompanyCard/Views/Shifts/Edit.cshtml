@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = "Edit";
 }
-<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+
+
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Scripts/jquery.datetimepicker.js"></script>
 <script src="~/Scripts/dateTimePickerCustom.js"></script>
@@ -53,5 +54,5 @@
 }
 
 <div>
-    @Ajax.ActionLink("Back to List", "Index", new { id = Model.EmployeeId }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
+    @Ajax.ActionLink("Back to List", "Index", new { id = Session["EmployeeId"] }, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "btn btn-primary btn-sm" })
 </div>

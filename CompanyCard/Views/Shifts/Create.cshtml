@@ -3,14 +3,14 @@
 @{
     ViewBag.Title = "Create";
 }
-<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Scripts/jquery.datetimepicker.js"></script>
 <script src="~/Scripts/dateTimePickerCustom.js"></script>
 
 <h2>Create</h2>
 
-@using (Ajax.BeginForm("Create", "Shifts", FormMethod.Post, new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace }))
+@using (Ajax.BeginForm("Create", "Shifts", FormMethod.Post,new AjaxOptions { LoadingElementId = "loadingImage", OnBegin = "onAjaxBegin()", OnSuccess = "onAjaxComplete()", UpdateTargetId = "mainBody", InsertionMode = InsertionMode.Replace }))
 {
     @Html.AntiForgeryToken()
 

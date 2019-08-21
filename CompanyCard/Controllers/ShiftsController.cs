@@ -215,7 +215,7 @@ namespace CompanyCard.Controllers
                         {
                             db.Shifts.Add(shift);
                             db.SaveChanges();
-                            return RedirectToAction("Index",new { shift.EmployeeId});
+                            return RedirectToAction("Index",new { id  = shift.EmployeeId});
                         }
 
                         ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "EmployeeName", shift.EmployeeId);

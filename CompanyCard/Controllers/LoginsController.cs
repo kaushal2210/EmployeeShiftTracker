@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using CompanyCard.Models;
@@ -14,8 +16,11 @@ namespace CompanyCard.Controllers
     {
         private CompanyDataContainer db = new CompanyDataContainer();
 
-        public ActionResult loginPage()
+        public ActionResult LoginPage()
         {
+            if (Session["username"] != null) {
+                return RedirectToAction("Index", "Companies");
+            }
             return View();
         }
         // GET: Logins
@@ -46,12 +51,13 @@ namespace CompanyCard.Controllers
             }
         }
 
-        public ActionResult logout()
+        public ActionResult Logout()
         {
             if (Session["username"] != null)
             {
                 Session.Abandon();
-                return RedirectToAction("loginPage", "Logins");
+                return RedirectToAction("LoginPage", "Logins");
+
             }
             else
             {
@@ -62,12 +68,13 @@ namespace CompanyCard.Controllers
         [HttpPost]
         public ActionResult Authorize(Logins log)
         {
-
+            string passwordMd5Hash = CalculateMD5Hash(log.Password);
+            log.Password = passwordMd5Hash;
             var user = db.Logins.Where(l => l.UserName == log.UserName && l.Password == log.Password).FirstOrDefault();
 
             if (user == null)
             {
-                ViewBag.Message = "Your user name or password is wrong, try again!!.";
+                Response.Write("<script LANGUAGE='JavaScript' >alert('Your username or password is wrong, Please Try again!!.')</script>");
                 return View("loginPage");
             }
             else
@@ -100,7 +107,7 @@ namespace CompanyCard.Controllers
                         {
                             return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
                         }
-                        return PartialView("Details", db.Logins);
+                        return PartialView("Details");
                     }
                     else
                     {
@@ -165,6 +172,8 @@ namespace CompanyCard.Controllers
                     {
                         if (ModelState.IsValid)
                         {
+                            string passwordMd5Hash = CalculateMD5Hash(logins.Password);
+                            logins.Password = passwordMd5Hash;
                             db.Logins.Add(logins);
                             db.SaveChanges();
                             return RedirectToAction("Index");
@@ -245,6 +254,8 @@ namespace CompanyCard.Controllers
                     {
                         if (ModelState.IsValid)
                         {
+                            string passwordMd5Hash = CalculateMD5Hash(logins.Password);
+                            logins.Password = passwordMd5Hash;
                             db.Entry(logins).State = EntityState.Modified;
                             db.SaveChanges();
                             return RedirectToAction("Index");
@@ -335,6 +346,66 @@ namespace CompanyCard.Controllers
                 else
                 {
                     return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+                }
+            }
+            else
+            {
+                return View("Error404");
+            }
+        }
+        public string CalculateMD5Hash(string input)
+        {
+            // step 1, calculate MD5 hash from input
+            MD5 md5 = System.Security.Cryptography.MD5.Create();
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            byte[] hash = md5.ComputeHash(inputBytes);
+
+            // step 2, convert byte array to hex string
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(int? id)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                if (Session["username"] != null)
+                {
+
+                    if (Session["Admin"].Equals("Yes"))
+                    {
+
+                        if (id == null)
+                        {
+                            return PartialView("Error", new ErrorViewModel { Description = "You should provide loginid." });
+                        }
+                        Logins logins = db.Logins.Find(id);
+                        if (logins == null)
+                        {
+                            return PartialView("Error", new ErrorViewModel { Description = "Loginid not found." });
+                        }
+                        string passwordMd5Hash = CalculateMD5Hash("ABCxyz123");
+                        logins.Password = passwordMd5Hash;
+                        db.Entry(logins).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+
+                    }
+                    else
+                    {
+                        return PartialView("Error", new ErrorViewModel { Description = "This function is only for Admins." });
+                    }
+
+                }
+                else
+                {
+                    return View("ErrorLogin", new ErrorViewModel { Description = "Your must login first!!." });
+
                 }
             }
             else
